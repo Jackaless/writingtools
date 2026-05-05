@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Readability Score Checker — Free Flesch-Kincaid & Reading Time Tool</title>
+<meta name="description" content="Instantly check the readability of any text. Get Flesch-Kincaid grade level, reading ease score, reading time, and writing stats — free, no sign-up required.">
+<meta name="keywords" content="readability checker, flesch kincaid, reading time estimator, reading level checker, text readability score, readability test">
+<meta property="og:title" content="Readability Score Checker — Free Tool">
+<meta property="og:description" content="Instantly check the readability of any text. Flesch-Kincaid grade level, reading ease, reading time and more.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<!-- ═══════════════════════════════════════════════════════════
+     GOOGLE ADSENSE — replace ca-pub-XXXXXXXXXXXXXXXX with your
+     Publisher ID from adsense.google.com after approval
+     ═══════════════════════════════════════════════════════════ -->
+<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1a18;
+    --ink-2: #4a4a44;
+    --ink-3: #888880;
+    --paper: #f5f2eb;
+    --paper-2: #ede9df;
+    --paper-3: #e2ddd3;
+    --accent: #c8441a;
+    --accent-2: #e8a030;
+    --green: #2d7d4f;
+    --blue: #1f5fa6;
+    --serif: 'Instrument Serif', Georgia, serif;
+    --mono: 'DM Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+    --radius: 6px;
+    --shadow: 0 2px 12px rgba(26,26,24,0.08), 0 1px 3px rgba(26,26,24,0.06);
+    --shadow-lg: 0 8px 32px rgba(26,26,24,0.12), 0 2px 8px rgba(26,26,24,0.08);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* Subtle grid texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(26,26,24,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(26,26,24,0.025) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+
+  /* ── Header ── */
+  header {
+    padding: 48px 0 36px;
+    border-bottom: 1px solid var(--paper-3);
+    margin-bottom: 40px;
+  }
+
+  .header-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .header-sub {
+    font-size: 15px;
+    color: var(--ink-2);
+    max-width: 520px;
+    line-height: 1.65;
+  }
+
+  /* ── Main layout ── */
+  .tool-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 24px;
+    align-items: start;
+  }
+
+  @media (max-width: 680px) {
+    .tool-layout { grid-template-columns: 1fr; }
+  }
+
+  /* ── Textarea ── */
+  .editor-wrap {
+    background: #fff;
+    border: 1px solid var(--paper-3);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+
+  .editor-wrap:focus-within {
+    box-shadow: var(--shadow-lg), 0 0 0 2px rgba(200,68,26,0.12);
+    border-color: rgba(200,68,26,0.3);
+  }
+
+  .editor-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--paper-3);
+    gap: 8px;
+  }
+
+  .editor-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .btn-clear {
+    font-family: var(--mono);
+    font-size: 11px;
+    background: none;
+    border: 1px solid var(--paper-3);
+    border-radius: 4px;
+    color: var(--ink-3);
+    padding: 3px 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.04em;
+  }
+
+  .btn-clear:hover { color: var(--accent); border-color: var(--accent); background: rgba(200,68,26,0.04); }
+
+  textarea {
+    width: 100%;
+    min-height: 320px;
+    padding: 18px 20px;
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--ink);
+    background: #fff;
+    border: none;
+    resize: vertical;
+    outline: none;
+    caret-color: var(--accent);
+  }
+
+  textarea::placeholder { color: var(--ink-3); }
+
+  .editor-footer {
+    padding: 8px 14px;
+    background: var(--paper);
+    border-top: 1px solid var(--paper-3);
+    display: flex;
+    gap: 16px;
+  }
+
+  .quick-stat {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+  }
+
+  .quick-stat span {
+    color: var(--ink-2);
+    font-weight: 500;
+  }
+
+  /* ── Stats panel ── */
+  .stats-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* Main score card */
+  .score-card {
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: var(--radius);
+    padding: 24px 20px 20px;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+    transition: opacity 0.3s;
+  }
+
+  .score-card::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .score-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(245,242,235,0.5);
+    margin-bottom: 8px;
+  }
+
+  .score-value {
+    font-family: var(--serif);
+    font-size: 52px;
+    line-height: 1;
+    font-weight: 400;
+    margin-bottom: 4px;
+    transition: all 0.4s;
+    min-height: 56px;
+  }
+
+  .score-band {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+    min-height: 18px;
+  }
+
+  /* Score bar */
+  .score-bar-track {
+    height: 4px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 2px;
+    margin-bottom: 6px;
+    overflow: hidden;
+  }
+
+  .score-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: var(--accent-2);
+    width: 0%;
+    transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .score-bar-labels {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    color: rgba(245,242,235,0.4);
+  }
+
+  /* Stat grid */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .stat-tile {
+    background: #fff;
+    border: 1px solid var(--paper-3);
+    border-radius: var(--radius);
+    padding: 14px 14px 12px;
+    box-shadow: var(--shadow);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .stat-tile:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .stat-tile-label {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 5px;
+  }
+
+  .stat-tile-value {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--ink);
+    transition: all 0.3s;
+    min-height: 30px;
+  }
+
+  .stat-tile-unit {
+    font-family: var(--sans);
+    font-size: 11px;
+    color: var(--ink-3);
+    margin-top: 2px;
+  }
+
+  /* Grade meter */
+  .grade-card {
+    background: #fff;
+    border: 1px solid var(--paper-3);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow);
+  }
+
+  .grade-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+  }
+
+  .grade-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .grade-value {
+    font-family: var(--serif);
+    font-size: 22px;
+    color: var(--ink);
+    transition: all 0.3s;
+    min-height: 26px;
+  }
+
+  .grade-desc {
+    font-size: 12px;
+    color: var(--ink-2);
+    line-height: 1.5;
+    min-height: 36px;
+    transition: all 0.3s;
+  }
+
+  /* Reading time */
+  .time-card {
+    background: var(--accent);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .time-icon {
+    font-size: 28px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .time-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(245,242,235,0.65);
+    margin-bottom: 3px;
+  }
+
+  .time-value {
+    font-family: var(--serif);
+    font-size: 22px;
+    color: #fff;
+    transition: all 0.3s;
+    min-height: 26px;
+  }
+
+  /* Empty state */
+  .empty-hint {
+    text-align: center;
+    padding: 20px 0 10px;
+    color: rgba(245,242,235,0.4);
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── Explainer section ── */
+  .explainer {
+    margin-top: 64px;
+    padding-top: 48px;
+    border-top: 1px solid var(--paper-3);
+  }
+
+  .explainer h2 {
+    font-family: var(--serif);
+    font-size: 1.75rem;
+    font-weight: 400;
+    margin-bottom: 14px;
+    color: var(--ink);
+  }
+
+  .explainer p {
+    font-size: 15px;
+    color: var(--ink-2);
+    max-width: 640px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+
+  .explainer h3 {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin: 32px 0 10px;
+    color: var(--ink);
+  }
+
+  .faq { margin-top: 48px; }
+
+  .faq-item {
+    border-top: 1px solid var(--paper-3);
+    padding: 20px 0;
+  }
+
+  .faq-item:last-child { border-bottom: 1px solid var(--paper-3); }
+
+  .faq-q {
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    user-select: none;
+    list-style: none;
+  }
+
+  .faq-q::after {
+    content: '+';
+    font-family: var(--mono);
+    font-size: 18px;
+    color: var(--ink-3);
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+
+  details[open] .faq-q::after { transform: rotate(45deg); }
+
+  .faq-a {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.8;
+    padding-top: 12px;
+    max-width: 600px;
+  }
+
+  /* ── Footer ── */
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--paper-3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .footer-brand {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-3);
+    letter-spacing: 0.06em;
+  }
+
+  .footer-brand strong {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 20px;
+  }
+
+  .footer-links a {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    transition: color 0.15s;
+  }
+
+  .footer-links a:hover { color: var(--accent); }
+
+  /* Ad placeholder */
+  .ad-slot {
+    margin-top: 32px;
+    background: var(--paper-2);
+    border: 1px dashed var(--paper-3);
+    border-radius: var(--radius);
+    padding: 24px;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.08em;
+  }
+
+  /* Animations */
+  /* ── Sticky anchor ad ── */
+  .sticky-anchor {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: #fff;
+    border-top: 1px solid var(--paper-3);
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    z-index: 999;
+    box-shadow: 0 -4px 20px rgba(26,26,24,0.08);
+  }
+
+  .sticky-anchor-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    flex-shrink: 0;
+  }
+
+  .sticky-anchor-close {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--ink-3);
+    line-height: 1;
+    padding: 4px;
+  }
+
+  .sticky-anchor-close:hover { color: var(--ink); }
+
+  /* Push page content up so anchor doesn't overlap footer */
+  body.anchor-visible { padding-bottom: 80px; }
+
+  /* ── Affiliate banner ── */
+  .affiliate-banner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: linear-gradient(135deg, #f0f7ff 0%, #e8f4fd 100%);
+    border: 1px solid #c8dff5;
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin: 28px 0;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .affiliate-banner:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-1px);
+    border-color: #a8c8ef;
+  }
+
+  .affiliate-banner-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+
+  .affiliate-banner-text {}
+
+  .affiliate-banner-title {
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+
+  .affiliate-banner-sub {
+    font-size: 12px;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+
+  .affiliate-banner-cta {
+    margin-left: auto;
+    background: #1565c0;
+    color: #fff;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    padding: 8px 16px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+
+  .affiliate-banner:hover .affiliate-banner-cta { background: #0d47a1; }
+
+  .affiliate-disclosure {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    margin-top: -20px;
+    margin-bottom: 24px;
+  }
+
+  /* ── In-content ad ── */
+  .ad-incontent {
+    background: var(--paper-2);
+    border: 1px dashed var(--paper-3);
+    border-radius: var(--radius);
+    padding: 20px;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    margin: 28px 0;
+    letter-spacing: 0.06em;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .stats-panel > * {
+    animation: fadeInUp 0.4s ease both;
+  }
+  .stats-panel > *:nth-child(1) { animation-delay: 0.05s; }
+  .stats-panel > *:nth-child(2) { animation-delay: 0.1s; }
+  .stats-panel > *:nth-child(3) { animation-delay: 0.15s; }
+  .stats-panel > *:nth-child(4) { animation-delay: 0.2s; }
+
+  .number-anim { transition: all 0.35s cubic-bezier(0.4,0,0.2,1); }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <header>
+    <p class="header-eyebrow">Free online tool</p>
+    <h1>Readability Score<br><em>Checker</em></h1>
+    <p class="header-sub">Paste any text to instantly see its Flesch reading ease score, Flesch-Kincaid grade level, estimated reading time, and key writing stats. No sign-up needed.</p>
+  </header>
+
+  <main>
+    <div class="tool-layout">
+
+      <!-- Editor -->
+      <div>
+        <div class="editor-wrap">
+          <div class="editor-toolbar">
+            <span class="editor-label">Your text</span>
+            <button class="btn-clear" onclick="clearText()">Clear</button>
+          </div>
+          <textarea
+            id="input"
+            placeholder="Paste or type your text here. Works with blog posts, emails, essays, product descriptions, social posts — anything."
+            oninput="analyse()"
+            aria-label="Text to analyse"
+            spellcheck="false"
+          ></textarea>
+          <div class="editor-footer">
+            <span class="quick-stat">Words: <span id="wc">0</span></span>
+            <span class="quick-stat">Characters: <span id="cc">0</span></span>
+            <span class="quick-stat">Sentences: <span id="sc">0</span></span>
+          </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════
+             AD SLOT 1 — Below tool, highest RPM position
+             Replace the div below with your AdSense ad unit
+             code from adsense.google.com → Ads → By ad unit
+             ═══════════════════════════════════════════════════ -->
+        <div class="ad-incontent">
+          Ad unit 1 — 336×280 or responsive rectangle<br>
+          Replace with: &lt;ins class="adsbygoogle"...&gt;
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════
+             AFFILIATE BANNER — Grammarly
+             Sign up free at grammarly.com/affiliates
+             Replace href with your affiliate tracking URL
+             Commission: ~£15–25 per free signup, £80+ premium
+             ═══════════════════════════════════════════════════ -->
+        <a class="affiliate-banner" href="https://grammarly.com" target="_blank" rel="noopener sponsored" aria-label="Try Grammarly free - sponsored">
+          <span class="affiliate-banner-icon">✍️</span>
+          <div class="affiliate-banner-text">
+            <div class="affiliate-banner-title">Want automated writing suggestions?</div>
+            <div class="affiliate-banner-sub">Grammarly checks grammar, tone, clarity and style as you write — free to get started.</div>
+          </div>
+          <span class="affiliate-banner-cta">Try free →</span>
+        </a>
+        <p class="affiliate-disclosure">* Sponsored link. We may earn a commission at no cost to you.</p>
+      </div>
+
+      <!-- Stats panel -->
+      <div class="stats-panel" id="stats">
+
+        <!-- Flesch reading ease -->
+        <div class="score-card" id="score-card">
+          <div class="score-label">Flesch reading ease</div>
+          <div class="score-value number-anim" id="ease-score">—</div>
+          <div class="score-band" id="ease-band">Paste text to begin</div>
+          <div class="score-bar-track">
+            <div class="score-bar-fill" id="ease-bar"></div>
+          </div>
+          <div class="score-bar-labels">
+            <span>0 hard</span>
+            <span>100 easy</span>
+          </div>
+        </div>
+
+        <!-- Reading time -->
+        <div class="time-card">
+          <div class="time-icon">⏱</div>
+          <div>
+            <div class="time-label">Est. reading time</div>
+            <div class="time-value number-anim" id="reading-time">—</div>
+          </div>
+        </div>
+
+        <!-- Grade level -->
+        <div class="grade-card">
+          <div class="grade-header">
+            <span class="grade-title">Flesch-Kincaid grade</span>
+            <span class="grade-value number-anim" id="grade-value">—</span>
+          </div>
+          <div class="grade-desc" id="grade-desc">Enter text above to see the US school grade level equivalent.</div>
+        </div>
+
+        <!-- Stat tiles -->
+        <div class="stat-grid">
+          <div class="stat-tile">
+            <div class="stat-tile-label">Avg sentence</div>
+            <div class="stat-tile-value number-anim" id="avg-sent">—</div>
+            <div class="stat-tile-unit">words / sentence</div>
+          </div>
+          <div class="stat-tile">
+            <div class="stat-tile-label">Avg word</div>
+            <div class="stat-tile-value number-anim" id="avg-syl">—</div>
+            <div class="stat-tile-unit">syllables / word</div>
+          </div>
+          <div class="stat-tile">
+            <div class="stat-tile-label">Long sentences</div>
+            <div class="stat-tile-value number-anim" id="long-sents">—</div>
+            <div class="stat-tile-unit">over 25 words</div>
+          </div>
+          <div class="stat-tile">
+            <div class="stat-tile-label">Complex words</div>
+            <div class="stat-tile-value number-anim" id="complex-words">—</div>
+            <div class="stat-tile-unit">3+ syllables</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SEO content -->
+    <section class="explainer" aria-label="About this tool">
+      <h2>What is a readability score?</h2>
+      <p>A readability score tells you how easy or difficult a piece of text is to read and understand. The most widely used formula is the <strong>Flesch Reading Ease</strong> score, developed by Rudolf Flesch in 1948. It produces a number between 0 and 100 — higher scores mean easier reading.</p>
+      <p>The formula considers two things: average sentence length and average number of syllables per word. Short sentences with simple words score highest. Dense academic prose scores lowest.</p>
+
+      <h3>Flesch Reading Ease score guide</h3>
+      <p>Scores of 70–80 are considered easy reading, suitable for most general audiences. Scores of 60–70 correspond to standard English. Scores below 30 are very difficult — typical of academic journals and legal documents. Most popular websites and blog posts aim for 60–70.</p>
+
+      <h3>What is the Flesch-Kincaid Grade Level?</h3>
+      <p>The Flesch-Kincaid Grade Level converts readability into a US school grade equivalent. A score of 8 means a typical 8th-grader (aged 13–14) could understand the text. Most content writers aim for grade 6–8 for general audiences. Microsoft Word uses this metric in its built-in readability statistics.</p>
+
+      <h3>How is reading time calculated?</h3>
+      <p>Reading time is estimated at 238 words per minute, which reflects the median adult silent reading speed according to research published in <em>Reading and Writing</em> journal. Fast readers average around 300 WPM; slower or less familiar material may take longer.</p>
+
+      <!-- ═══════════════════════════════════════════════════
+           AD SLOT 2 — Mid-content, in-article unit
+           Replace with your AdSense in-article ad unit code
+           ═══════════════════════════════════════════════════ -->
+      <div class="ad-incontent" style="margin: 32px 0;">
+        Ad unit 2 — In-article / native unit<br>
+        Replace with: &lt;ins class="adsbygoogle" data-ad-format="fluid"...&gt;
+      </div>
+
+      <!-- AFFILIATE — ProWritingAid (alternative to Grammarly, higher commission) -->
+      <!-- Sign up at prowritingaid.com/affiliate — pays up to £40/sale -->
+      <!-- Uncomment and add your affiliate URL when ready:
+      <a class="affiliate-banner" href="YOUR_PROWRITINGAID_AFFILIATE_URL" target="_blank" rel="noopener sponsored">
+        <span class="affiliate-banner-icon">📝</span>
+        <div class="affiliate-banner-text">
+          <div class="affiliate-banner-title">Take your writing further with ProWritingAid</div>
+          <div class="affiliate-banner-sub">Deep editing analysis, style suggestions, and readability reports in one tool.</div>
+        </div>
+        <span class="affiliate-banner-cta">Try free →</span>
+      </a>
+      <p class="affiliate-disclosure">* Sponsored link. We may earn a commission at no cost to you.</p>
+      -->
+
+      <div class="faq" aria-label="Frequently asked questions">
+        <h2 style="font-family: var(--serif); font-size: 1.75rem; font-weight: 400; margin-bottom: 24px;">Frequently asked questions</h2>
+
+        <details class="faq-item">
+          <summary class="faq-q">What readability score should I aim for?</summary>
+          <p class="faq-a">It depends on your audience. General blog posts and marketing copy: aim for 60–70. News articles and business emails: 65–75. Children's content: 80–90. Academic or technical writing may legitimately score lower — the goal is matching your audience's reading level, not maximising the score.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-q">How do I improve my readability score?</summary>
+          <p class="faq-a">The two most effective changes are shortening sentences and replacing long words with shorter alternatives. Aim for an average sentence length under 20 words. Split any sentence over 30 words. Replace "utilise" with "use", "demonstrate" with "show", "approximately" with "about".</p>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-q">Does readability affect SEO?</summary>
+          <p class="faq-a">Indirectly, yes. Google measures engagement signals like time on page and bounce rate. Easier-to-read content tends to hold attention longer, which can improve rankings. Some SEO tools like Yoast SEO include readability scoring for this reason.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-q">Is this tool free to use?</summary>
+          <p class="faq-a">Yes, completely free with no account required. All analysis happens instantly in your browser — your text is never sent to a server or stored anywhere.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-q">How accurate is the syllable count?</summary>
+          <p class="faq-a">The syllable counting algorithm uses a heuristic approach that handles the vast majority of common English words correctly. It may occasionally miscount unusual proper nouns, technical terms, or words with silent syllables. For practical purposes, the resulting readability scores are accurate within normal variation.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span class="footer-brand"><strong>ReadabilityCheck.io</strong> · free text analysis tool</span>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="#">About</a>
+      <a href="#">Privacy</a>
+      <a href="#">Contact</a>
+    </nav>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════════
+       AD SLOT 3 — Pre-footer leaderboard
+       Replace with your AdSense 728×90 or responsive unit
+       ═══════════════════════════════════════════════════ -->
+  <div class="ad-incontent" style="margin-top: 24px;">
+    Ad unit 3 — Leaderboard / footer banner<br>
+    Replace with: &lt;ins class="adsbygoogle" data-ad-format="auto"...&gt;
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     STICKY ANCHOR AD — highest viewability, big RPM boost
+     Replace inner div with your AdSense anchor/sticky ad unit
+     In AdSense: Ads → By ad unit → Display ads → Anchor/overlay
+     ═══════════════════════════════════════════════════════════ -->
+<div class="sticky-anchor" id="sticky-anchor">
+  <span class="sticky-anchor-label">Ad</span>
+  <!-- Replace this placeholder with your AdSense anchor unit code -->
+  <div style="width:320px;height:50px;background:var(--paper-2);border:1px dashed var(--paper-3);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:0.06em;">
+    Sticky anchor ad — 320×50 mobile banner
+  </div>
+  <button class="sticky-anchor-close" onclick="dismissAnchor()" aria-label="Close ad">✕</button>
+</div>
+
+<script>
+function dismissAnchor() {
+  document.getElementById('sticky-anchor').style.display = 'none';
+  document.body.classList.remove('anchor-visible');
+}
+document.body.classList.add('anchor-visible');
+</script>
+
+<script>
+// ── Syllable counter ──────────────────────────────────────────────
+function countSyllables(word) {
+  word = word.toLowerCase().replace(/[^a-z]/g, '');
+  if (!word) return 0;
+  if (word.length <= 3) return 1;
+
+  // Common exceptions
+  const exceptions = { 'the': 1, 'a': 1, 'i': 1, 'area': 3, 'idea': 3, 'real': 2, 'being': 2, 'doing': 2, 'going': 2 };
+  if (exceptions[word]) return exceptions[word];
+
+  // Remove silent trailing e (not preceded by another vowel)
+  word = word.replace(/(?<=[^aeiou])e$/, '');
+  // Remove trailing ed unless 2 letters total
+  if (word.length > 2) word = word.replace(/ed$/, '');
+  // Remove trailing es (not ies)
+  if (!word.endsWith('ies')) word = word.replace(/es$/, '');
+
+  const vowelGroups = word.match(/[aeiouy]+/g);
+  let count = vowelGroups ? vowelGroups.length : 1;
+
+  // Adjustments
+  if (word.endsWith('le') && word.length > 2 && !'aeiou'.includes(word[word.length - 3])) count++;
+  if (word.endsWith('ia') || word.endsWith('io') || word.endsWith('ious') || word.endsWith('ious')) count++;
+  if (word.startsWith('re') && !'aeiou'.includes(word[2])) { /* no change */ }
+
+  return Math.max(1, count);
+}
+
+// ── Text statistics ───────────────────────────────────────────────
+function getStats(text) {
+  if (!text.trim()) return null;
+
+  // Sentences: split on . ! ? followed by space or end
+  const rawSentences = text.split(/[.!?]+(?:\s|$)/).filter(s => s.trim().length > 2);
+  const sentenceCount = Math.max(1, rawSentences.length);
+
+  // Words
+  const words = text.match(/\b[a-zA-Z''-]+\b/g) || [];
+  const wordCount = words.length;
+  if (wordCount < 2) return null;
+
+  // Syllables
+  let totalSyllables = 0;
+  let complexWordCount = 0;
+  words.forEach(w => {
+    const s = countSyllables(w);
+    totalSyllables += s;
+    if (s >= 3) complexWordCount++;
+  });
+
+  const avgWordsPerSentence = wordCount / sentenceCount;
+  const avgSyllablesPerWord = totalSyllables / wordCount;
+
+  // Flesch Reading Ease
+  const flesch = 206.835 - (1.015 * avgWordsPerSentence) - (84.6 * avgSyllablesPerWord);
+  const fleschClamped = Math.min(100, Math.max(0, flesch));
+
+  // Flesch-Kincaid Grade
+  const fkGrade = (0.39 * avgWordsPerSentence) + (11.8 * avgSyllablesPerWord) - 15.59;
+  const fkClamped = Math.min(20, Math.max(0, fkGrade));
+
+  // Reading time (238 wpm)
+  const readingSeconds = Math.ceil((wordCount / 238) * 60);
+
+  // Long sentences
+  const longSentenceCount = rawSentences.filter(s => {
+    const w = s.match(/\b[a-zA-Z''-]+\b/g) || [];
+    return w.length > 25;
+  }).length;
+
+  return {
+    wordCount,
+    charCount: text.length,
+    sentenceCount,
+    avgWordsPerSentence: Math.round(avgWordsPerSentence * 10) / 10,
+    avgSyllablesPerWord: Math.round(avgSyllablesPerWord * 100) / 100,
+    flesch: Math.round(fleschClamped),
+    fkGrade: Math.round(fkClamped * 10) / 10,
+    readingSeconds,
+    longSentenceCount,
+    complexWordCount,
+    complexWordPct: Math.round((complexWordCount / wordCount) * 100)
+  };
+}
+
+// ── Reading ease band ─────────────────────────────────────────────
+function getEaseBand(score) {
+  if (score >= 90) return { label: 'Very easy — 5th grade', color: '#2d7d4f' };
+  if (score >= 80) return { label: 'Easy — 6th grade', color: '#3a9060' };
+  if (score >= 70) return { label: 'Fairly easy — 7th grade', color: '#5a9e40' };
+  if (score >= 60) return { label: 'Standard — 8th–9th grade', color: '#e8a030' };
+  if (score >= 50) return { label: 'Fairly difficult — 10th–12th grade', color: '#d4782a' };
+  if (score >= 30) return { label: 'Difficult — college level', color: '#c8441a' };
+  return { label: 'Very difficult — professional', color: '#9b2a12' };
+}
+
+// ── Grade level description ───────────────────────────────────────
+function getGradeDesc(grade) {
+  if (grade <= 6) return 'Accessible to most readers. Great for general audiences and web content.';
+  if (grade <= 8) return 'Standard reading level. Suitable for most adults without effort.';
+  if (grade <= 10) return 'Moderate complexity. Comfortable for high-school educated readers.';
+  if (grade <= 12) return 'Challenging for many readers. Consider simplifying for broad audiences.';
+  if (grade <= 16) return 'College-level prose. Best suited to educated or professional audiences.';
+  return 'Post-graduate complexity. Very dense or technical writing.';
+}
+
+// ── Format time ───────────────────────────────────────────────────
+function formatTime(seconds) {
+  if (seconds < 60) return `${seconds}s`;
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  if (secs === 0) return `${mins} min`;
+  return `${mins}m ${secs}s`;
+}
+
+// ── Main analyse function ─────────────────────────────────────────
+function analyse() {
+  const text = document.getElementById('input').value;
+  const stats = getStats(text);
+
+  // Quick stats always update
+  const words = text.match(/\b[a-zA-Z''-]+\b/g) || [];
+  document.getElementById('wc').textContent = words.length;
+  document.getElementById('cc').textContent = text.length;
+  const sentences = text.split(/[.!?]+(?:\s|$)/).filter(s => s.trim().length > 2);
+  document.getElementById('sc').textContent = sentences.length;
+
+  if (!stats) {
+    // Reset to empty state
+    document.getElementById('ease-score').textContent = '—';
+    document.getElementById('ease-band').textContent = 'Paste text to begin';
+    document.getElementById('ease-bar').style.width = '0%';
+    document.getElementById('reading-time').textContent = '—';
+    document.getElementById('grade-value').textContent = '—';
+    document.getElementById('grade-desc').textContent = 'Enter text above to see the US school grade level equivalent.';
+    document.getElementById('avg-sent').textContent = '—';
+    document.getElementById('avg-syl').textContent = '—';
+    document.getElementById('long-sents').textContent = '—';
+    document.getElementById('complex-words').textContent = '—';
+    return;
+  }
+
+  const band = getEaseBand(stats.flesch);
+
+  // Score card
+  document.getElementById('ease-score').textContent = stats.flesch;
+  document.getElementById('ease-band').textContent = band.label;
+  document.getElementById('ease-band').style.color = band.color;
+  document.getElementById('ease-bar').style.width = stats.flesch + '%';
+  document.getElementById('ease-bar').style.background = band.color;
+
+  // Reading time
+  document.getElementById('reading-time').textContent = formatTime(stats.readingSeconds);
+
+  // Grade
+  document.getElementById('grade-value').textContent = 'Grade ' + stats.fkGrade;
+  document.getElementById('grade-desc').textContent = getGradeDesc(stats.fkGrade);
+
+  // Tiles
+  document.getElementById('avg-sent').textContent = stats.avgWordsPerSentence;
+  document.getElementById('avg-syl').textContent = stats.avgSyllablesPerWord;
+  document.getElementById('long-sents').textContent = stats.longSentenceCount;
+  document.getElementById('complex-words').textContent = stats.complexWordPct + '%';
+}
+
+function clearText() {
+  document.getElementById('input').value = '';
+  analyse();
+}
+
+// Seed with sample text so it doesn't look empty on first load
+const sample = `Good writing is clear, simple, and direct. Short sentences help readers follow your ideas without effort. When writers use long, complicated sentences filled with technical jargon and unnecessarily complex vocabulary, comprehension deteriorates and audiences disengage rapidly.
+
+The best way to check whether your writing is accessible is to test it. Paste your text here and see your score instantly.`;
+
+document.getElementById('input').value = sample;
+analyse();
+</script>
+
+</body>
+</html>
