@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading Time Calculator — Estimate How Long to Read Any Text</title>
+<meta name="description" content="Calculate the reading time of any text instantly. Set your reading speed, get speaking time, and see reading level. Free online reading time estimator — no sign-up.">
+<meta name="keywords" content="reading time calculator, reading time estimator, how long to read, reading speed calculator, words per minute, speaking time calculator">
+<meta property="og:title" content="Reading Time Calculator — Free Online Tool">
+<meta property="og:description" content="Instantly calculate reading and speaking time for any text. Adjust for your reading speed. Free, no sign-up.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;500&family=Courier+Prime:ital@0;1&display=swap" rel="stylesheet">
+
+<!-- GOOGLE ADSENSE — replace ca-pub-XXXXXXXXXXXXXXXX after approval
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #faf7f2;
+    --cream-2: #f2ede3;
+    --cream-3: #e8e0d0;
+    --ink: #1c1a14;
+    --ink-2: #4a4535;
+    --ink-3: #8a8272;
+    --rust: #b84a2e;
+    --rust-light: #f5e8e4;
+    --gold: #c8901a;
+    --gold-light: #fdf3dc;
+    --green: #2e6e44;
+    --green-light: #e4f0e8;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'Source Sans 3', sans-serif;
+    --mono: 'Courier Prime', monospace;
+  }
+
+  body {
+    font-family: var(--sans);
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0;
+  }
+
+  .page { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
+
+  header {
+    padding: 52px 0 40px;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 32px;
+  }
+
+  .site-nav {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    margin-bottom: 14px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .site-nav a { color: var(--ink-3); text-decoration: none; transition: color .15s; }
+  .site-nav a:hover, .site-nav a.active { color: var(--rust); }
+
+  h1 { font-family: var(--serif); font-size: clamp(1.9rem, 4.5vw, 2.8rem); font-weight: 600; line-height: 1.1; }
+  h1 .sub { display: block; font-weight: 400; font-style: italic; color: var(--ink-2); font-size: 0.65em; margin-top: 4px; }
+
+  .tools-nav { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
+
+  .tool-pill {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em;
+    padding: 6px 14px; border-radius: 3px; border: 1px solid var(--cream-3);
+    background: var(--cream-2); color: var(--ink-2); text-decoration: none; transition: all .15s;
+  }
+
+  .tool-pill:hover { background: var(--rust-light); border-color: var(--rust); color: var(--rust); }
+  .tool-pill.current { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 24px;
+    align-items: start;
+  }
+
+  @media (max-width: 680px) { .layout { grid-template-columns: 1fr; } }
+
+  /* Speed selector */
+  .speed-bar {
+    background: var(--cream-2);
+    border: 1px solid var(--cream-3);
+    border-radius: 4px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+
+  .speed-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .speed-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+  .speed-val { font-family: var(--serif); font-size: 18px; color: var(--ink); }
+  .speed-unit { font-family: var(--mono); font-size: 10px; color: var(--ink-3); }
+
+  .speed-presets { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+
+  .preset-btn {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em;
+    padding: 4px 10px; border-radius: 3px; border: 1px solid var(--cream-3);
+    background: var(--cream); color: var(--ink-2); cursor: pointer; transition: all .15s;
+  }
+
+  .preset-btn:hover, .preset-btn.active { background: var(--rust); border-color: var(--rust); color: #fff; }
+
+  input[type=range] {
+    width: 100%; height: 4px; border-radius: 2px;
+    background: linear-gradient(to right, var(--rust) 0%, var(--rust) var(--pct, 42%), var(--cream-3) var(--pct, 42%), var(--cream-3) 100%);
+    outline: none; border: none; cursor: pointer; appearance: none;
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    appearance: none; width: 16px; height: 16px; border-radius: 50%;
+    background: var(--ink); cursor: pointer;
+    box-shadow: 0 1px 4px rgba(28,26,20,0.2);
+  }
+
+  /* Textarea */
+  .editor-wrap { background: #fff; border: 1.5px solid var(--cream-3); border-radius: 4px; overflow: hidden; transition: border-color .2s; }
+  .editor-wrap:focus-within { border-color: var(--rust); }
+
+  .editor-top {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 14px; background: var(--cream-2); border-bottom: 1px solid var(--cream-3);
+  }
+
+  .editor-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+
+  .btn-clear { font-family: var(--mono); font-size: 11px; background: none; border: 1px solid var(--cream-3); border-radius: 3px; color: var(--ink-3); padding: 3px 10px; cursor: pointer; transition: all .15s; }
+  .btn-clear:hover { color: var(--rust); border-color: var(--rust); }
+
+  textarea {
+    width: 100%; min-height: 280px; padding: 20px;
+    font-family: var(--sans); font-size: 15px; line-height: 1.8;
+    color: var(--ink); background: #fff; border: none; resize: vertical; outline: none; caret-color: var(--rust);
+  }
+
+  textarea::placeholder { color: var(--ink-3); font-style: italic; }
+
+  /* ── Sidebar ── */
+  .sidebar { display: flex; flex-direction: column; gap: 12px; }
+
+  /* Big time display */
+  .time-hero {
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 4px;
+    padding: 24px 20px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .time-hero::before {
+    content: '';
+    position: absolute; top: -30px; right: -30px;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .time-hero-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(250,247,242,0.5); margin-bottom: 6px; }
+  .time-hero-value { font-family: var(--serif); font-size: 48px; font-weight: 400; line-height: 1; margin-bottom: 4px; color: var(--cream); transition: all 0.4s; min-height: 52px; }
+  .time-hero-sub { font-family: var(--mono); font-size: 11px; color: rgba(250,247,242,0.5); }
+
+  /* Progress visual */
+  .progress-card {
+    background: #fff;
+    border: 1px solid var(--cream-3);
+    border-radius: 4px;
+    padding: 14px 16px;
+  }
+
+  .prog-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 10px; }
+
+  .prog-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .prog-name { font-size: 12px; color: var(--ink-2); }
+  .prog-time { font-family: var(--mono); font-size: 12px; color: var(--ink); }
+  .prog-track { height: 3px; background: var(--cream-2); border-radius: 2px; overflow: hidden; margin-bottom: 10px; }
+  .prog-fill { height: 100%; border-radius: 2px; transition: width 0.5s ease; }
+
+  /* Stat tiles */
+  .mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+  .mini-tile { background: #fff; border: 1px solid var(--cream-3); border-radius: 4px; padding: 12px; }
+  .mini-tile-label { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 4px; }
+  .mini-tile-val { font-family: var(--serif); font-size: 24px; line-height: 1; color: var(--ink); min-height: 28px; }
+  .mini-tile-unit { font-size: 11px; color: var(--ink-3); margin-top: 2px; }
+
+  /* Affiliate */
+  .affiliate-banner {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--gold-light); border: 1px solid #e8d5a0;
+    border-radius: 4px; padding: 14px 16px; margin: 24px 0;
+    text-decoration: none; transition: all 0.2s;
+  }
+
+  .affiliate-banner:hover { box-shadow: 0 4px 16px rgba(28,26,20,0.1); transform: translateY(-1px); }
+  .affiliate-banner-icon { font-size: 24px; flex-shrink: 0; }
+  .affiliate-banner-title { font-weight: 500; font-size: 14px; color: var(--ink); margin-bottom: 2px; }
+  .affiliate-banner-sub { font-size: 12px; color: var(--ink-2); line-height: 1.5; }
+
+  .affiliate-banner-cta {
+    margin-left: auto; background: var(--ink); color: var(--cream);
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em;
+    padding: 7px 14px; border-radius: 3px; white-space: nowrap; flex-shrink: 0;
+  }
+
+  .affiliate-disclosure { font-family: var(--mono); font-size: 10px; color: var(--ink-3); margin-top: -16px; margin-bottom: 20px; }
+
+  .ad-incontent {
+    background: var(--cream-2); border: 1px dashed var(--cream-3); border-radius: 3px;
+    padding: 20px; text-align: center; font-family: var(--mono); font-size: 11px;
+    color: var(--ink-3); margin: 24px 0; letter-spacing: 0.06em;
+  }
+
+  .explainer { margin-top: 64px; padding-top: 48px; border-top: 2px solid var(--ink); }
+  .explainer h2 { font-family: var(--serif); font-size: 1.6rem; font-weight: 400; margin-bottom: 14px; }
+  .explainer p { font-size: 14px; color: var(--ink-2); line-height: 1.85; margin-bottom: 14px; max-width: 640px; }
+  .explainer h3 { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; margin: 28px 0 10px; }
+
+  details { border-top: 1px solid var(--cream-3); }
+  details:last-child { border-bottom: 1px solid var(--cream-3); }
+  summary { list-style: none; padding: 16px 0; font-size: 14px; font-weight: 500; cursor: pointer; display: flex; justify-content: space-between; }
+  summary::after { content: '+'; font-family: var(--mono); font-size: 18px; color: var(--ink-3); }
+  details[open] summary::after { transform: rotate(45deg); display: inline-block; }
+  .faq-a { font-size: 14px; color: var(--ink-2); padding-bottom: 16px; line-height: 1.75; max-width: 580px; }
+
+  .sticky-anchor {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--cream); border-top: 2px solid var(--ink);
+    padding: 8px 16px; display: flex; align-items: center; justify-content: center;
+    gap: 12px; z-index: 999; box-shadow: 0 -4px 20px rgba(28,26,20,0.1);
+  }
+
+  .sticky-anchor-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); flex-shrink: 0; }
+  .sticky-anchor-close { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 14px; color: var(--ink-3); padding: 4px; }
+  body.anchor-visible { padding-bottom: 80px; }
+
+  footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--cream-3); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
+  .footer-brand span { color: var(--rust); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <nav class="site-nav">
+      <a href="index.html">Readability Checker</a>
+      <a href="passive-voice-detector.html">Passive Voice</a>
+      <a href="word-counter.html">Word Counter</a>
+      <a href="reading-time.html" class="active">Reading Time</a>
+    </nav>
+    <h1>Reading Time<span class="sub">Calculator & Estimator</span></h1>
+  </header>
+
+  <nav class="tools-nav" aria-label="Writing tools">
+    <a href="index.html" class="tool-pill">Readability Checker</a>
+    <a href="passive-voice-detector.html" class="tool-pill">Passive Voice</a>
+    <a href="word-counter.html" class="tool-pill">Word Counter</a>
+    <a href="reading-time.html" class="tool-pill current">Reading Time</a>
+  </nav>
+
+  <main>
+    <div class="layout">
+      <div>
+
+        <!-- Speed selector -->
+        <div class="speed-bar">
+          <div class="speed-label-row">
+            <span class="speed-label">Your reading speed</span>
+            <span><span class="speed-val" id="speed-display">238</span> <span class="speed-unit">words per minute</span></span>
+          </div>
+          <div class="speed-presets">
+            <button class="preset-btn" onclick="setSpeed(150)">Slow (150)</button>
+            <button class="preset-btn active" onclick="setSpeed(238)">Average (238)</button>
+            <button class="preset-btn" onclick="setSpeed(300)">Fast (300)</button>
+            <button class="preset-btn" onclick="setSpeed(450)">Speed reader (450)</button>
+          </div>
+          <input type="range" id="speed-slider" min="50" max="700" value="238"
+            oninput="onSlider(this.value)" style="--pct:27%">
+        </div>
+
+        <div class="editor-wrap">
+          <div class="editor-top">
+            <span class="editor-label">Paste your text</span>
+            <button class="btn-clear" onclick="clearAll()">Clear</button>
+          </div>
+          <textarea id="input" placeholder="Paste any text here — an article, essay, speech, book chapter, email newsletter, or blog post. Reading and speaking times update instantly…" oninput="analyse()" spellcheck="false"></textarea>
+        </div>
+
+        <div class="ad-incontent" style="margin-top:20px;">
+          Ad unit 1 — 336×280 responsive rectangle<br>
+          Replace with: &lt;ins class="adsbygoogle"...&gt;
+        </div>
+
+        <a class="affiliate-banner" href="https://grammarly.com" target="_blank" rel="noopener sponsored">
+          <span class="affiliate-banner-icon">📖</span>
+          <div>
+            <div class="affiliate-banner-title">Write content your readers actually finish</div>
+            <div class="affiliate-banner-sub">Grammarly improves clarity, conciseness and engagement — making every word count. Free to start.</div>
+          </div>
+          <span class="affiliate-banner-cta">Try free →</span>
+        </a>
+        <p class="affiliate-disclosure">* Sponsored link. We may earn a commission at no cost to you.</p>
+
+      </div>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+
+        <div class="time-hero">
+          <div class="time-hero-label">Reading time</div>
+          <div class="time-hero-value" id="read-time">—</div>
+          <div class="time-hero-sub" id="read-wpm">at 238 wpm</div>
+        </div>
+
+        <div class="progress-card">
+          <div class="prog-label">Time comparison</div>
+
+          <div class="prog-row">
+            <span class="prog-name">☕ Coffee break</span>
+            <span class="prog-time" id="pct-coffee">—</span>
+          </div>
+          <div class="prog-track"><div class="prog-fill" id="bar-coffee" style="width:0%;background:var(--gold)"></div></div>
+
+          <div class="prog-row">
+            <span class="prog-name">🚇 Tube ride</span>
+            <span class="prog-time" id="pct-tube">—</span>
+          </div>
+          <div class="prog-track"><div class="prog-fill" id="bar-tube" style="width:0%;background:var(--rust)"></div></div>
+
+          <div class="prog-row">
+            <span class="prog-name">🍽 Lunch break</span>
+            <span class="prog-time" id="pct-lunch">—</span>
+          </div>
+          <div class="prog-track"><div class="prog-fill" id="bar-lunch" style="width:0%;background:var(--green)"></div></div>
+        </div>
+
+        <div class="mini-grid">
+          <div class="mini-tile">
+            <div class="mini-tile-label">Speaking time</div>
+            <div class="mini-tile-val" id="speak-time">—</div>
+            <div class="mini-tile-unit">at 130 wpm</div>
+          </div>
+          <div class="mini-tile">
+            <div class="mini-tile-label">Word count</div>
+            <div class="mini-tile-val" id="word-count">0</div>
+            <div class="mini-tile-unit">words</div>
+          </div>
+          <div class="mini-tile">
+            <div class="mini-tile-label">Silent reading</div>
+            <div class="mini-tile-val" id="silent-time">—</div>
+            <div class="mini-tile-unit">at 238 wpm</div>
+          </div>
+          <div class="mini-tile">
+            <div class="mini-tile-label">Audiobook</div>
+            <div class="mini-tile-val" id="audio-time">—</div>
+            <div class="mini-tile-unit">at 150 wpm</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <section class="explainer">
+      <h2>How reading time is calculated</h2>
+      <p>Reading time is calculated by dividing the total word count by your selected reading speed in words per minute (WPM). The default speed of 238 WPM is the median adult silent reading speed, based on research published in the journal <em>Reading and Writing</em> by Brysbaert (2019), which analysed reading speeds across 190 studies.</p>
+
+      <h3>Average reading speeds by context</h3>
+      <p><strong>Silent reading (adult):</strong> 200–300 WPM. Most adults read between 200 and 300 words per minute when reading silently for comprehension. The median is 238 WPM.</p>
+      <p><strong>Speed reading:</strong> 400–700 WPM. Trained speed readers can reach 400–700 WPM, though comprehension typically decreases above 400 WPM.</p>
+      <p><strong>Out loud / presentations:</strong> 120–150 WPM. Speaking pace for presentations and speeches. Audiobooks typically run at 150–160 WPM.</p>
+      <p><strong>Children (age 6–8):</strong> 50–100 WPM. Early readers develop speed with practice, typically reaching adult speeds by age 12–14.</p>
+
+      <h3>Why reading time matters for content creators</h3>
+      <p>Research by Medium found that articles with a reading time of 7 minutes attract the most engagement — enough to convey depth without overwhelming the reader. For blog posts, 1,500–2,500 words (6–10 minutes) is the sweet spot for SEO and reader retention combined.</p>
+      <p>Displaying estimated reading time on articles has been shown to increase click-through rates and reduce bounce rates, because readers know the time commitment before they start.</p>
+
+      <div style="margin-top:40px;">
+        <h2>Frequently asked questions</h2>
+
+        <details>
+          <summary>How accurate is the reading time estimate?</summary>
+          <p class="faq-a">It's a well-researched estimate, not an exact figure. Individual reading speeds vary widely based on familiarity with the subject, text complexity, and reading conditions. The 238 WPM default is the scientific median — roughly half of adults read faster, half slower. Use the speed slider to calibrate for your own pace.</p>
+        </details>
+
+        <details>
+          <summary>What is the average reading speed for a student?</summary>
+          <p class="faq-a">College students average around 250–300 WPM for academic material, though this drops significantly for dense technical content. For leisure reading, the same student might read at 300–350 WPM. Secondary school students typically read at 200–250 WPM.</p>
+        </details>
+
+        <details>
+          <summary>How long does it take to read a book?</summary>
+          <p class="faq-a">The average novel is 90,000 words. At 238 WPM reading for one hour per day, that's approximately 6.3 hours of reading time — roughly 6–7 days. A short book of 50,000 words takes around 3.5 hours. Paste a sample chapter to get an accurate estimate for any specific book.</p>
+        </details>
+
+        <details>
+          <summary>How is speaking time different from reading time?</summary>
+          <p class="faq-a">Speaking aloud is significantly slower than silent reading. The average speaking pace for a clear, natural delivery is 120–150 WPM — roughly half the silent reading speed. This tool uses 130 WPM as the speaking time default, which suits most presentations and narrations.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span class="footer-brand">Writing<span>Tools</span>.io — free tools for writers &amp; educators</span>
+    <nav style="display:flex;gap:16px;">
+      <a href="#" style="color:var(--ink-3);text-decoration:none">About</a>
+      <a href="#" style="color:var(--ink-3);text-decoration:none">Privacy</a>
+      <a href="#" style="color:var(--ink-3);text-decoration:none">Contact</a>
+    </nav>
+  </footer>
+
+  <div class="ad-incontent" style="margin-top:24px;">
+    Ad unit 2 — Footer leaderboard. Replace with AdSense unit.
+  </div>
+
+</div>
+
+<div class="sticky-anchor" id="sticky-anchor">
+  <span class="sticky-anchor-label">Ad</span>
+  <div style="width:320px;height:50px;background:var(--cream-2);border:1px dashed var(--cream-3);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;color:var(--ink-3);">
+    Sticky anchor ad — replace with AdSense anchor unit
+  </div>
+  <button class="sticky-anchor-close" onclick="document.getElementById('sticky-anchor').style.display='none';document.body.classList.remove('anchor-visible')">✕</button>
+</div>
+
+<script>
+let wpm = 238;
+
+const PRESETS = [
+  { wpm: 150, label: 'Slow (150)' },
+  { wpm: 238, label: 'Average (238)' },
+  { wpm: 300, label: 'Fast (300)' },
+  { wpm: 450, label: 'Speed reader (450)' }
+];
+
+function setSpeed(val) {
+  wpm = val;
+  document.getElementById('speed-slider').value = val;
+  document.getElementById('speed-display').textContent = val;
+  updateSliderBg(val);
+  document.querySelectorAll('.preset-btn').forEach((b, i) => {
+    b.classList.toggle('active', PRESETS[i].wpm === val);
+  });
+  analyse();
+}
+
+function onSlider(val) {
+  wpm = parseInt(val);
+  document.getElementById('speed-display').textContent = val;
+  updateSliderBg(val);
+  document.querySelectorAll('.preset-btn').forEach((b, i) => {
+    b.classList.toggle('active', PRESETS[i].wpm === wpm);
+  });
+  analyse();
+}
+
+function updateSliderBg(val) {
+  const min = 50, max = 700;
+  const pct = ((val - min) / (max - min) * 100).toFixed(1) + '%';
+  document.getElementById('speed-slider').style.setProperty('--pct', pct);
+}
+
+function formatTime(seconds) {
+  if (seconds === 0) return '—';
+  if (seconds < 60) return `${seconds}s`;
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  if (m >= 60) {
+    const h = Math.floor(m / 60);
+    const rm = m % 60;
+    return rm === 0 ? `${h}h` : `${h}h ${rm}m`;
+  }
+  return s === 0 ? `${m} min` : `${m}m ${s}s`;
+}
+
+function analyse() {
+  const text = document.getElementById('input').value;
+  const words = text.trim() === '' ? [] : text.trim().split(/\s+/).filter(w => w.match(/[a-zA-Z0-9]/));
+  const wordCount = words.length;
+
+  document.getElementById('word-count').textContent = wordCount.toLocaleString();
+
+  if (wordCount === 0) {
+    ['read-time','speak-time','silent-time','audio-time'].forEach(id => {
+      document.getElementById(id).textContent = '—';
+    });
+    document.getElementById('read-wpm').textContent = `at ${wpm} wpm`;
+    ['coffee','tube','lunch'].forEach(k => {
+      document.getElementById('pct-' + k).textContent = '—';
+      document.getElementById('bar-' + k).style.width = '0%';
+    });
+    return;
+  }
+
+  const readSecs = Math.ceil((wordCount / wpm) * 60);
+  const speakSecs = Math.ceil((wordCount / 130) * 60);
+  const silentSecs = Math.ceil((wordCount / 238) * 60);
+  const audioSecs = Math.ceil((wordCount / 150) * 60);
+
+  document.getElementById('read-time').textContent = formatTime(readSecs);
+  document.getElementById('read-wpm').textContent = `at ${wpm} wpm`;
+  document.getElementById('speak-time').textContent = formatTime(speakSecs);
+  document.getElementById('silent-time').textContent = formatTime(silentSecs);
+  document.getElementById('audio-time').textContent = formatTime(audioSecs);
+
+  // Comparison bars (benchmarks in seconds)
+  const benchmarks = { coffee: 300, tube: 600, lunch: 1800 };
+  Object.entries(benchmarks).forEach(([key, bench]) => {
+    const pct = Math.min(100, (readSecs / bench) * 100);
+    const label = readSecs >= bench
+      ? `longer than ${formatTime(bench)}`
+      : `${Math.round(pct)}% of ${formatTime(bench)}`;
+    document.getElementById('pct-' + key).textContent = label;
+    document.getElementById('bar-' + key).style.width = pct + '%';
+  });
+}
+
+function clearAll() {
+  document.getElementById('input').value = '';
+  analyse();
+}
+
+document.body.classList.add('anchor-visible');
+</script>
+</body>
+</html>

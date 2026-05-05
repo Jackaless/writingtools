@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word Counter — Free Online Word & Character Count Tool</title>
+<meta name="description" content="Count words, characters, sentences, paragraphs and pages instantly. Free online word counter for writers, students and professionals. No sign-up needed.">
+<meta name="keywords" content="word counter, character counter, word count tool, online word counter, character count, word frequency counter">
+<meta property="og:title" content="Word Counter — Free Online Tool">
+<meta property="og:description" content="Instantly count words, characters, sentences, paragraphs and pages in any text. Free, no sign-up.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;500&family=Courier+Prime:ital@0;1&display=swap" rel="stylesheet">
+
+<!-- GOOGLE ADSENSE — replace ca-pub-XXXXXXXXXXXXXXXX after approval
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #faf7f2;
+    --cream-2: #f2ede3;
+    --cream-3: #e8e0d0;
+    --ink: #1c1a14;
+    --ink-2: #4a4535;
+    --ink-3: #8a8272;
+    --rust: #b84a2e;
+    --rust-light: #f5e8e4;
+    --gold: #c8901a;
+    --gold-light: #fdf3dc;
+    --green: #2e6e44;
+    --green-light: #e4f0e8;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'Source Sans 3', sans-serif;
+    --mono: 'Courier Prime', monospace;
+  }
+
+  body {
+    font-family: var(--sans);
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* ── Header ── */
+  header {
+    padding: 52px 0 40px;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 32px;
+  }
+
+  .site-nav {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    margin-bottom: 14px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .site-nav a { color: var(--ink-3); text-decoration: none; transition: color .15s; }
+  .site-nav a:hover { color: var(--rust); }
+  .site-nav a.active { color: var(--rust); }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+    font-weight: 600;
+    line-height: 1.1;
+  }
+
+  h1 .sub {
+    display: block;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--ink-2);
+    font-size: 0.65em;
+    margin-top: 4px;
+  }
+
+  /* ── Tool nav pills ── */
+  .tools-nav {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+
+  .tool-pill {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 6px 14px;
+    border-radius: 3px;
+    border: 1px solid var(--cream-3);
+    background: var(--cream-2);
+    color: var(--ink-2);
+    text-decoration: none;
+    transition: all .15s;
+  }
+
+  .tool-pill:hover { background: var(--rust-light); border-color: var(--rust); color: var(--rust); }
+  .tool-pill.current { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+
+  /* ── Main layout ── */
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 24px;
+    align-items: start;
+  }
+
+  @media (max-width: 680px) { .layout { grid-template-columns: 1fr; } }
+
+  /* ── Textarea ── */
+  .editor-wrap {
+    background: #fff;
+    border: 1.5px solid var(--cream-3);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color .2s;
+  }
+
+  .editor-wrap:focus-within { border-color: var(--rust); }
+
+  .editor-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    background: var(--cream-2);
+    border-bottom: 1px solid var(--cream-3);
+  }
+
+  .editor-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .btn-clear {
+    font-family: var(--mono);
+    font-size: 11px;
+    background: none;
+    border: 1px solid var(--cream-3);
+    border-radius: 3px;
+    color: var(--ink-3);
+    padding: 3px 10px;
+    cursor: pointer;
+    transition: all .15s;
+  }
+
+  .btn-clear:hover { color: var(--rust); border-color: var(--rust); }
+
+  textarea {
+    width: 100%;
+    min-height: 340px;
+    padding: 20px;
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--ink);
+    background: #fff;
+    border: none;
+    resize: vertical;
+    outline: none;
+    caret-color: var(--rust);
+  }
+
+  textarea::placeholder { color: var(--ink-3); font-style: italic; }
+
+  /* Frequency toggle */
+  .freq-toggle {
+    display: flex;
+    gap: 8px;
+    padding: 10px 14px;
+    background: var(--cream-2);
+    border-top: 1px solid var(--cream-3);
+    align-items: center;
+  }
+
+  .freq-label { font-family: var(--mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.06em; }
+
+  .btn-freq {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 3px;
+    border: 1px solid var(--cream-3);
+    background: var(--cream);
+    color: var(--ink-3);
+    cursor: pointer;
+    transition: all .15s;
+    letter-spacing: 0.04em;
+  }
+
+  .btn-freq.active { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+
+  /* ── Stats sidebar ── */
+  .sidebar { display: flex; flex-direction: column; gap: 12px; }
+
+  /* Big stat tiles */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .stat-tile {
+    background: #fff;
+    border: 1px solid var(--cream-3);
+    border-radius: 4px;
+    padding: 14px 12px 12px;
+    transition: transform .15s, box-shadow .15s;
+  }
+
+  .stat-tile:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(28,26,20,0.08); }
+
+  .stat-tile.hero {
+    grid-column: 1 / -1;
+    background: var(--ink);
+    color: var(--cream);
+    padding: 18px 16px 14px;
+  }
+
+  .tile-label {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 5px;
+  }
+
+  .stat-tile.hero .tile-label { color: rgba(250,247,242,0.5); }
+
+  .tile-value {
+    font-family: var(--serif);
+    font-size: 32px;
+    line-height: 1;
+    transition: all 0.3s;
+    min-height: 36px;
+  }
+
+  .stat-tile.hero .tile-value { font-size: 48px; color: var(--cream); }
+
+  .tile-unit {
+    font-family: var(--sans);
+    font-size: 11px;
+    color: var(--ink-3);
+    margin-top: 2px;
+  }
+
+  .stat-tile.hero .tile-unit { color: rgba(250,247,242,0.5); }
+
+  /* Reading time card */
+  .time-card {
+    background: var(--rust);
+    border-radius: 4px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .time-icon { font-size: 22px; flex-shrink: 0; }
+  .time-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(250,247,242,0.65); margin-bottom: 3px; }
+  .time-value { font-family: var(--serif); font-size: 20px; color: #fff; min-height: 24px; }
+
+  /* Pages estimate */
+  .pages-card {
+    background: var(--gold-light);
+    border: 1px solid #e8d5a0;
+    border-radius: 4px;
+    padding: 14px 16px;
+  }
+
+  .pages-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  .pages-value { font-family: var(--serif); font-size: 20px; color: var(--ink); min-height: 24px; }
+  .pages-sub { font-size: 11px; color: var(--ink-3); margin-top: 2px; }
+
+  /* Word frequency panel */
+  .freq-panel {
+    background: #fff;
+    border: 1px solid var(--cream-3);
+    border-radius: 4px;
+    padding: 14px;
+    display: none;
+    margin-top: 12px;
+  }
+
+  .freq-panel.visible { display: block; }
+  .freq-title { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 10px; }
+
+  .freq-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+    border-bottom: 1px solid var(--cream-2);
+  }
+
+  .freq-item:last-child { border-bottom: none; }
+
+  .freq-word { font-family: var(--mono); font-size: 12px; color: var(--ink); flex: 1; }
+  .freq-bar-track { flex: 2; height: 4px; background: var(--cream-2); border-radius: 2px; overflow: hidden; }
+  .freq-bar-fill { height: 100%; background: var(--rust); border-radius: 2px; transition: width 0.4s ease; }
+  .freq-count { font-family: var(--mono); font-size: 11px; color: var(--ink-3); width: 20px; text-align: right; }
+
+  /* ── Affiliate ── */
+  .affiliate-banner {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--gold-light);
+    border: 1px solid #e8d5a0;
+    border-radius: 4px;
+    padding: 14px 16px;
+    margin: 24px 0;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .affiliate-banner:hover { box-shadow: 0 4px 16px rgba(28,26,20,0.1); transform: translateY(-1px); }
+  .affiliate-banner-icon { font-size: 24px; flex-shrink: 0; }
+  .affiliate-banner-title { font-weight: 500; font-size: 14px; color: var(--ink); margin-bottom: 2px; }
+  .affiliate-banner-sub { font-size: 12px; color: var(--ink-2); line-height: 1.5; }
+
+  .affiliate-banner-cta {
+    margin-left: auto;
+    background: var(--ink);
+    color: var(--cream);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    padding: 7px 14px;
+    border-radius: 3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .affiliate-disclosure { font-family: var(--mono); font-size: 10px; color: var(--ink-3); margin-top: -16px; margin-bottom: 20px; }
+
+  .ad-incontent {
+    background: var(--cream-2);
+    border: 1px dashed var(--cream-3);
+    border-radius: 3px;
+    padding: 20px;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    margin: 24px 0;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── Explainer ── */
+  .explainer { margin-top: 64px; padding-top: 48px; border-top: 2px solid var(--ink); }
+
+  .explainer h2 { font-family: var(--serif); font-size: 1.6rem; font-weight: 400; margin-bottom: 14px; }
+  .explainer p { font-size: 14px; color: var(--ink-2); line-height: 1.85; margin-bottom: 14px; max-width: 640px; }
+  .explainer h3 { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; margin: 28px 0 10px; }
+
+  details { border-top: 1px solid var(--cream-3); }
+  details:last-child { border-bottom: 1px solid var(--cream-3); }
+  summary { list-style: none; padding: 16px 0; font-size: 14px; font-weight: 500; cursor: pointer; display: flex; justify-content: space-between; }
+  summary::after { content: '+'; font-family: var(--mono); font-size: 18px; color: var(--ink-3); }
+  details[open] summary::after { transform: rotate(45deg); display: inline-block; }
+  .faq-a { font-size: 14px; color: var(--ink-2); padding-bottom: 16px; line-height: 1.75; max-width: 580px; }
+
+  /* ── Sticky anchor ── */
+  .sticky-anchor {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--cream);
+    border-top: 2px solid var(--ink);
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    z-index: 999;
+    box-shadow: 0 -4px 20px rgba(28,26,20,0.1);
+  }
+
+  .sticky-anchor-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); flex-shrink: 0; }
+
+  .sticky-anchor-close {
+    position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+    background: none; border: none; cursor: pointer; font-size: 14px; color: var(--ink-3); padding: 4px;
+  }
+
+  body.anchor-visible { padding-bottom: 80px; }
+
+  footer {
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--cream-3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+  }
+
+  .footer-brand span { color: var(--rust); }
+
+  @keyframes countUp { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+  .count-anim { animation: countUp 0.25s ease both; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <nav class="site-nav">
+      <a href="index.html">Readability Checker</a>
+      <a href="passive-voice-detector.html">Passive Voice</a>
+      <a href="word-counter.html" class="active">Word Counter</a>
+      <a href="reading-time.html">Reading Time</a>
+    </nav>
+    <h1>Word Counter<span class="sub">& Text Analyser</span></h1>
+  </header>
+
+  <nav class="tools-nav" aria-label="Writing tools">
+    <a href="index.html" class="tool-pill">Readability Checker</a>
+    <a href="passive-voice-detector.html" class="tool-pill">Passive Voice</a>
+    <a href="word-counter.html" class="tool-pill current">Word Counter</a>
+    <a href="reading-time.html" class="tool-pill">Reading Time</a>
+  </nav>
+
+  <main>
+    <div class="layout">
+
+      <div>
+        <div class="editor-wrap">
+          <div class="editor-top">
+            <span class="editor-label">Paste or type your text</span>
+            <button class="btn-clear" onclick="clearAll()">Clear</button>
+          </div>
+          <textarea id="input" placeholder="Paste any text here — an essay, email, article, social post, cover letter, or anything else. All counts update instantly as you type…" oninput="analyse()" spellcheck="false"></textarea>
+          <div class="freq-toggle">
+            <span class="freq-label">Word frequency:</span>
+            <button class="btn-freq" id="btn-freq" onclick="toggleFreq()">Show top words</button>
+          </div>
+        </div>
+
+        <div class="freq-panel" id="freq-panel">
+          <div class="freq-title">Most frequent words</div>
+          <div id="freq-list"></div>
+        </div>
+
+        <div class="ad-incontent">
+          Ad unit 1 — 336×280 responsive rectangle<br>
+          Replace with: &lt;ins class="adsbygoogle"...&gt;
+        </div>
+
+        <a class="affiliate-banner" href="https://grammarly.com" target="_blank" rel="noopener sponsored">
+          <span class="affiliate-banner-icon">✍️</span>
+          <div>
+            <div class="affiliate-banner-title">Need more than a word count?</div>
+            <div class="affiliate-banner-sub">Grammarly checks grammar, clarity and tone as you write — free to get started.</div>
+          </div>
+          <span class="affiliate-banner-cta">Try free →</span>
+        </a>
+        <p class="affiliate-disclosure">* Sponsored link. We may earn a commission at no cost to you.</p>
+      </div>
+
+      <!-- Sidebar stats -->
+      <div class="sidebar">
+
+        <div class="stat-grid">
+          <div class="stat-tile hero">
+            <div class="tile-label">Words</div>
+            <div class="tile-value" id="word-count">0</div>
+            <div class="tile-unit">total words</div>
+          </div>
+
+          <div class="stat-tile">
+            <div class="tile-label">Characters</div>
+            <div class="tile-value" id="char-count">0</div>
+            <div class="tile-unit">with spaces</div>
+          </div>
+
+          <div class="stat-tile">
+            <div class="tile-label">No spaces</div>
+            <div class="tile-value" id="char-no-space">0</div>
+            <div class="tile-unit">characters</div>
+          </div>
+
+          <div class="stat-tile">
+            <div class="tile-label">Sentences</div>
+            <div class="tile-value" id="sentence-count">0</div>
+            <div class="tile-unit">sentences</div>
+          </div>
+
+          <div class="stat-tile">
+            <div class="tile-label">Paragraphs</div>
+            <div class="tile-value" id="para-count">0</div>
+            <div class="tile-unit">paragraphs</div>
+          </div>
+
+          <div class="stat-tile">
+            <div class="tile-label">Unique words</div>
+            <div class="tile-value" id="unique-count">0</div>
+            <div class="tile-unit">distinct words</div>
+          </div>
+        </div>
+
+        <div class="time-card">
+          <div class="time-icon">⏱</div>
+          <div>
+            <div class="time-label">Reading time</div>
+            <div class="time-value" id="read-time">—</div>
+          </div>
+        </div>
+
+        <div class="time-card" style="background:var(--green);">
+          <div class="time-icon">🗣</div>
+          <div>
+            <div class="time-label">Speaking time</div>
+            <div class="time-value" id="speak-time">—</div>
+          </div>
+        </div>
+
+        <div class="pages-card">
+          <div class="pages-label">Page estimate</div>
+          <div class="pages-value" id="page-count">—</div>
+          <div class="pages-sub">at 12pt, double-spaced</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SEO content -->
+    <section class="explainer">
+      <h2>About this word counter</h2>
+      <p>This free word counter gives you an instant, comprehensive breakdown of any text. Unlike basic word counters, it tracks words, characters (with and without spaces), sentences, paragraphs, unique words, reading time, speaking time, and an estimated page count — all updating in real time as you type or paste.</p>
+
+      <h3>Who uses a word counter?</h3>
+      <p><strong>Students and academics</strong> use word counters to hit essay targets and stay within assignment limits. Most university submissions require a specific word count, and knowing your running total prevents last-minute surprises.</p>
+      <p><strong>Writers and authors</strong> track word count to gauge chapter length, novel progress, and daily writing goals. The industry standard for a novel is 80,000–100,000 words; a short story typically runs 1,000–7,500.</p>
+      <p><strong>Content marketers and SEO writers</strong> use word count to hit the recommended length for blog posts. Research consistently shows that long-form content of 1,500–2,500 words tends to rank higher in Google search results.</p>
+      <p><strong>Social media managers</strong> need character counts for platform limits — Twitter/X enforces 280 characters, LinkedIn posts perform best under 1,300, and Instagram captions cut off after 125 characters in the feed.</p>
+
+      <h3>How is speaking time calculated?</h3>
+      <p>Speaking time is estimated at 130 words per minute, which reflects the average conversational speaking pace. Presentations and speeches typically run at 100–150 WPM depending on the speaker and subject matter. Reading time uses 238 WPM, the median silent reading speed for adults.</p>
+
+      <h3>How are pages estimated?</h3>
+      <p>The page estimate assumes a standard academic format: 12pt Times New Roman, double-spaced, with standard 1-inch margins — the default for most essay submissions. This works out to approximately 250 words per page. Single-spaced at 12pt runs approximately 500 words per page.</p>
+
+      <div style="margin-top:40px">
+        <h2>Frequently asked questions</h2>
+
+        <details>
+          <summary>Does this tool work offline?</summary>
+          <p class="faq-a">Yes — once the page has loaded, all counting happens entirely in your browser with no internet connection required. Your text is never sent to any server.</p>
+        </details>
+
+        <details>
+          <summary>What counts as a word?</summary>
+          <p class="faq-a">Any sequence of characters separated by a space or punctuation. Hyphenated words like "well-being" count as one word. Numbers count as words. URLs count as one word regardless of length.</p>
+        </details>
+
+        <details>
+          <summary>How accurate is the character count?</summary>
+          <p class="faq-a">The character count is exact — it counts every character including spaces, punctuation, and line breaks. The "without spaces" count removes all space characters. This matches how platforms like Twitter count characters.</p>
+        </details>
+
+        <details>
+          <summary>Why does my word processor give a different count?</summary>
+          <p class="faq-a">Minor differences are common between tools. Microsoft Word and Google Docs handle edge cases like hyphenated words, footnotes, and text boxes differently. For most purposes the counts will be within 1–2% of each other.</p>
+        </details>
+
+        <details>
+          <summary>Is there a word limit?</summary>
+          <p class="faq-a">No limit — paste as much text as you like. The tool handles anything from a single sentence to a full novel manuscript. Very large texts (100,000+ words) may take a second to process on older devices.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span class="footer-brand">Writing<span>Tools</span>.io — free tools for writers &amp; educators</span>
+    <nav style="display:flex;gap:16px;">
+      <a href="#" style="color:var(--ink-3);text-decoration:none">About</a>
+      <a href="#" style="color:var(--ink-3);text-decoration:none">Privacy</a>
+      <a href="#" style="color:var(--ink-3);text-decoration:none">Contact</a>
+    </nav>
+  </footer>
+
+  <div class="ad-incontent" style="margin-top:24px;">
+    Ad unit 2 — Footer leaderboard<br>Replace with AdSense unit
+  </div>
+
+</div>
+
+<!-- Sticky anchor -->
+<div class="sticky-anchor" id="sticky-anchor">
+  <span class="sticky-anchor-label">Ad</span>
+  <div style="width:320px;height:50px;background:var(--cream-2);border:1px dashed var(--cream-3);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;color:var(--ink-3);">
+    Sticky anchor ad — replace with AdSense anchor unit
+  </div>
+  <button class="sticky-anchor-close" onclick="document.getElementById('sticky-anchor').style.display='none';document.body.classList.remove('anchor-visible')">✕</button>
+</div>
+
+<script>
+let freqVisible = false;
+
+function analyse() {
+  const text = document.getElementById('input').value;
+
+  // Words
+  const words = text.trim() === '' ? [] : text.trim().split(/\s+/).filter(w => w.match(/[a-zA-Z0-9]/));
+  const wordCount = words.length;
+
+  // Characters
+  const charCount = text.length;
+  const charNoSpace = text.replace(/\s/g, '').length;
+
+  // Sentences
+  const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 2);
+  const sentenceCount = Math.max(0, sentences.length);
+
+  // Paragraphs
+  const paras = text.split(/\n\s*\n/).filter(p => p.trim().length > 0);
+  const paraCount = Math.max(0, paras.length);
+
+  // Unique words
+  const unique = new Set(words.map(w => w.toLowerCase().replace(/[^a-z0-9]/g, '')));
+  const uniqueCount = unique.size;
+
+  // Times
+  const readSecs = Math.ceil((wordCount / 238) * 60);
+  const speakSecs = Math.ceil((wordCount / 130) * 60);
+
+  // Pages (250 words per page double-spaced)
+  const pages = wordCount === 0 ? 0 : Math.max(0.1, wordCount / 250);
+
+  // Update DOM
+  setVal('word-count', wordCount.toLocaleString());
+  setVal('char-count', charCount.toLocaleString());
+  setVal('char-no-space', charNoSpace.toLocaleString());
+  setVal('sentence-count', sentenceCount.toLocaleString());
+  setVal('para-count', paraCount.toLocaleString());
+  setVal('unique-count', uniqueCount.toLocaleString());
+
+  document.getElementById('read-time').textContent = wordCount === 0 ? '—' : formatTime(readSecs);
+  document.getElementById('speak-time').textContent = wordCount === 0 ? '—' : formatTime(speakSecs);
+  document.getElementById('page-count').textContent = wordCount === 0 ? '—' : (pages < 1 ? '< 1 page' : Math.round(pages * 10) / 10 + ' pages');
+
+  if (freqVisible) renderFreq(words);
+}
+
+function setVal(id, val) {
+  const el = document.getElementById(id);
+  el.textContent = val;
+  el.classList.remove('count-anim');
+  void el.offsetWidth;
+  el.classList.add('count-anim');
+}
+
+function formatTime(seconds) {
+  if (seconds < 60) return `${seconds}s`;
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return s === 0 ? `${m} min` : `${m}m ${s}s`;
+}
+
+function toggleFreq() {
+  freqVisible = !freqVisible;
+  const panel = document.getElementById('freq-panel');
+  const btn = document.getElementById('btn-freq');
+  panel.classList.toggle('visible', freqVisible);
+  btn.classList.toggle('active', freqVisible);
+  btn.textContent = freqVisible ? 'Hide top words' : 'Show top words';
+  if (freqVisible) {
+    const words = document.getElementById('input').value.trim().split(/\s+/).filter(w => w.match(/[a-zA-Z]/));
+    renderFreq(words);
+  }
+}
+
+function renderFreq(words) {
+  const stopWords = new Set(['the','a','an','and','or','but','in','on','at','to','for','of','with','by','from','as','is','was','are','were','be','been','being','have','has','had','do','does','did','will','would','could','should','may','might','it','its','this','that','these','those','i','you','he','she','we','they','my','your','his','her','our','their','not','so','if','then','than','when','where','who','which','what','how','all','any','each','some','no','up','out','about','into','through','during','before','after','above','below','between','such','more','also','just','can','get','got','go','said','there']);
+  const freq = {};
+  words.forEach(w => {
+    const clean = w.toLowerCase().replace(/[^a-z]/g, '');
+    if (clean.length > 2 && !stopWords.has(clean)) freq[clean] = (freq[clean] || 0) + 1;
+  });
+  const sorted = Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 12);
+  const max = sorted[0]?.[1] || 1;
+  document.getElementById('freq-list').innerHTML = sorted.length === 0
+    ? '<p style="font-size:12px;color:var(--ink-3);font-style:italic">No significant words found yet</p>'
+    : sorted.map(([word, count]) => `
+      <div class="freq-item">
+        <span class="freq-word">${word}</span>
+        <div class="freq-bar-track"><div class="freq-bar-fill" style="width:${(count/max)*100}%"></div></div>
+        <span class="freq-count">${count}</span>
+      </div>
+    `).join('');
+}
+
+function clearAll() {
+  document.getElementById('input').value = '';
+  analyse();
+  if (freqVisible) toggleFreq();
+}
+
+document.body.classList.add('anchor-visible');
+</script>
+</body>
+</html>
