@@ -1,117 +1,951 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Description" content="Instantly detect passive voice in any text. See every passive construction highlighted, get an active voice score, and learn how to rewrite each sentence. Free, no sign-up.">
-  <meta name="Keywords" content="passive voice detector, passive voice checker, active voice checker, passive voice finder, grammar checker, writing tool for teachers">
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.4">
-  <style type="text/css">
-    body {background-color: #f9f5ef}
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px 'Helvetica Neue'; color: #776f5f; -webkit-text-stroke: #776f5f}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px 'Helvetica Neue'; color: #a73623; -webkit-text-stroke: #a73623}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 21.8px 'Helvetica Neue'; color: #393528; -webkit-text-stroke: #393528}
-    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: right; font: 22.0px 'Helvetica Neue'; color: #151410; -webkit-text-stroke: #151410}
-    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 10.0px 'Helvetica Neue'; color: #776f5f; -webkit-text-stroke: #776f5f}
-    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px 'Helvetica Neue'; color: #393528; -webkit-text-stroke: #393528; background-color: #efe9dc}
-    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px 'Helvetica Neue'; color: #f9f5ef; -webkit-text-stroke: #f9f5ef; background-color: #151410}
-    p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 11.0px 'Helvetica Neue'; color: #393528; -webkit-text-stroke: #393528; background-color: #efe9dc}
-    p.p10 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 11.0px 'Helvetica Neue'; color: #ffffff; -webkit-text-stroke: #ffffff; background-color: #a73623}
-    p.p11 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px 'Helvetica Neue'; color: #776f5f; -webkit-text-stroke: #776f5f}
-    p.p12 {margin: 0.0px 0.0px 0.0px 0.0px; font: 42.0px 'Helvetica Neue'; color: #151410; -webkit-text-stroke: #151410}
-    p.p13 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #776f5f; -webkit-text-stroke: #776f5f}
-    p.p14 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #151410; -webkit-text-stroke: #151410; min-height: 15.0px}
-    p.p15 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 13.0px 'Helvetica Neue'; color: #776f5f; -webkit-text-stroke: #776f5f}
-    p.p16 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 11.0px 'Helvetica Neue'; color: #776f5f; -webkit-text-stroke: #776f5f}
-    p.p17 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 11.0px 'Helvetica Neue'; color: #776f5f; -webkit-text-stroke: #776f5f; background-color: #efe9dc}
-    p.p18 {margin: 0.0px 0.0px 0.0px 0.0px; font: 26.0px '.Apple Color Emoji UI'; color: #0000e9; -webkit-text-stroke: #0000e9}
-    p.p19 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Helvetica Neue'; color: #151410; -webkit-text-stroke: #151410}
-    p.p20 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #393528; -webkit-text-stroke: #393528}
-    p.p21 {margin: 0.0px 0.0px 24.0px 0.0px; font: 10.0px 'Helvetica Neue'; color: #776f5f; -webkit-text-stroke: #776f5f}
-    p.p24 {margin: 0.0px 0.0px 14.0px 0.0px; font: 14.0px 'Helvetica Neue'; color: #393528; -webkit-text-stroke: #393528}
-    p.p25 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px 'Helvetica Neue'; color: #776f5f; -webkit-text-stroke: #776f5f}
-    p.p26 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 14.0px 'Zapf Dingbats'; color: #776f5f; -webkit-text-stroke: #776f5f}
-    span.s1 {font-kerning: none}
-    span.s2 {font-kerning: none; color: #a73623; -webkit-text-stroke: 0px #a73623}
-    span.s3 {font-kerning: none; color: #393528; -webkit-text-stroke: 0px #393528}
-    span.s4 {font-kerning: none; background-color: #ffffff}
-    span.s5 {font-kerning: none; background-color: #efe9dc}
-    span.s6 {font-kerning: none; background-color: #fcf1d4}
-    span.s7 {font: 14.0px 'Helvetica Neue'; font-kerning: none; color: #151410; -webkit-text-stroke: 0px #151410}
-    span.s8 {font: 12.0px 'Helvetica Neue'; font-kerning: none; color: #393528; -webkit-text-stroke: 0px #393528}
-    span.s9 {font-kerning: none; background-color: #f9f5ef}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Passive Voice Detector — Free Online Tool for Writers, Editors & Teachers</title>
+<meta name="description" content="Instantly detect passive voice in any text. See every passive construction highlighted, get an active voice score, and learn how to rewrite each sentence. Free, no sign-up.">
+<meta name="keywords" content="passive voice detector, passive voice checker, active voice checker, passive voice finder, grammar checker, writing tool for teachers">
+<meta property="og:title" content="Passive Voice Detector — Free Online Writing Tool">
+<meta property="og:description" content="Highlight every passive voice construction in your text instantly. Perfect for writers, editors, teachers and students.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;500&family=Courier+Prime:ital@0;1&display=swap" rel="stylesheet">
+ 
+<!-- ═══════════════════════════════════════════════════════════
+     GOOGLE ADSENSE — replace ca-pub-XXXXXXXXXXXXXXXX with your
+     Publisher ID from adsense.google.com after approval
+     ═══════════════════════════════════════════════════════════ -->
+<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+  :root {
+    --cream: #faf7f2;
+    --cream-2: #f2ede3;
+    --cream-3: #e8e0d0;
+    --ink: #1c1a14;
+    --ink-2: #4a4535;
+    --ink-3: #8a8272;
+    --rust: #b84a2e;
+    --rust-light: #f5e8e4;
+    --gold: #c8901a;
+    --gold-light: #fdf3dc;
+    --green: #2e6e44;
+    --green-light: #e4f0e8;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'Source Sans 3', sans-serif;
+    --mono: 'Courier Prime', monospace;
+  }
+ 
+  html { scroll-behavior: smooth; }
+ 
+  body {
+    font-family: var(--sans);
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+ 
+  /* Textured background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+ 
+  .page { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
+ 
+  /* ── Header ── */
+  header {
+    padding: 52px 0 40px;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+ 
+  .header-left {}
+ 
+  .site-nav {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    margin-bottom: 14px;
+    display: flex;
+    gap: 20px;
+  }
+ 
+  .site-nav a { color: var(--ink-3); text-decoration: none; transition: color .15s; }
+  .site-nav a:hover, .site-nav a.active { color: var(--rust); }
+ 
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+ 
+  h1 .rule-line {
+    display: block;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--ink-2);
+    font-size: 0.65em;
+    margin-top: 4px;
+  }
+ 
+  .header-score-preview {
+    text-align: right;
+  }
+ 
+  .score-ring {
+    width: 80px;
+    height: 80px;
+    margin-left: auto;
+  }
+ 
+  .score-ring circle { transition: stroke-dashoffset 0.6s cubic-bezier(.4,0,.2,1); }
+ 
+  .score-pct {
+    font-family: var(--serif);
+    font-size: 22px;
+    fill: var(--ink);
+    dominant-baseline: central;
+    text-anchor: middle;
+  }
+ 
+  .score-ring-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--ink-3);
+    text-align: center;
+    margin-top: 4px;
+    text-transform: uppercase;
+  }
+ 
+  /* ── Main layout ── */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 28px;
+    align-items: start;
+  }
+ 
+  @media (max-width: 700px) { .main-grid { grid-template-columns: 1fr; } }
+ 
+  /* ── Textarea ── */
+  .editor-section {}
+ 
+  .editor-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+ 
+  .editor-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+ 
+  .btn-row { display: flex; gap: 8px; }
+ 
+  .btn {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    border-radius: 3px;
+    padding: 4px 12px;
+    cursor: pointer;
+    transition: all .15s;
+    border: 1px solid var(--cream-3);
+    background: var(--cream-2);
+    color: var(--ink-2);
+  }
+  .btn:hover { border-color: var(--rust); color: var(--rust); background: var(--rust-light); }
+  .btn.active { background: var(--rust); border-color: var(--rust); color: #fff; }
+ 
+  textarea {
+    width: 100%;
+    min-height: 280px;
+    padding: 20px;
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.8;
+    border: 1.5px solid var(--cream-3);
+    border-radius: 4px;
+    background: #fff;
+    color: var(--ink);
+    resize: vertical;
+    outline: none;
+    caret-color: var(--rust);
+    transition: border-color .2s;
+  }
+  textarea:focus { border-color: var(--rust); }
+  textarea::placeholder { color: var(--ink-3); font-style: italic; }
+ 
+  /* ── Highlighted output ── */
+  .output-section { display: none; }
+  .output-section.visible { display: block; }
+ 
+  .output-box {
+    width: 100%;
+    min-height: 280px;
+    padding: 20px;
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.8;
+    border: 1.5px solid var(--cream-3);
+    border-radius: 4px;
+    background: #fff;
+    color: var(--ink);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+ 
+  .passive-highlight {
+    background: var(--rust-light);
+    border-bottom: 2px solid var(--rust);
+    border-radius: 2px;
+    cursor: pointer;
+    padding: 0 1px;
+    position: relative;
+    transition: background .15s;
+  }
+  .passive-highlight:hover { background: #f5d0c8; }
+ 
+  .passive-tooltip {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ink);
+    color: var(--cream);
+    font-size: 11px;
+    font-family: var(--mono);
+    padding: 6px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 10;
+    pointer-events: none;
+  }
+  .passive-highlight:hover .passive-tooltip { display: block; }
+ 
+  /* ── Stats sidebar ── */
+  .sidebar { display: flex; flex-direction: column; gap: 14px; }
+ 
+  .stat-card {
+    background: #fff;
+    border: 1px solid var(--cream-3);
+    border-radius: 4px;
+    padding: 16px;
+  }
+ 
+  .stat-card-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 8px;
+  }
+ 
+  .big-num {
+    font-family: var(--serif);
+    font-size: 42px;
+    line-height: 1;
+    color: var(--ink);
+    min-height: 46px;
+  }
+ 
+  .big-num.good { color: var(--green); }
+  .big-num.warn { color: var(--gold); }
+  .big-num.bad  { color: var(--rust); }
+ 
+  .big-num-sub {
+    font-size: 12px;
+    color: var(--ink-3);
+    font-family: var(--sans);
+    margin-top: 3px;
+    min-height: 16px;
+  }
+ 
+  .verdict-band {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    border-radius: 3px;
+    margin-top: 8px;
+    display: inline-block;
+  }
+  .vb-green { background: var(--green-light); color: var(--green); }
+  .vb-gold  { background: var(--gold-light); color: var(--gold); }
+  .vb-rust  { background: var(--rust-light); color: var(--rust); }
+ 
+  /* List of found passives */
+  .passive-list-card {
+    background: #fff;
+    border: 1px solid var(--cream-3);
+    border-radius: 4px;
+    padding: 16px;
+    max-height: 320px;
+    overflow-y: auto;
+  }
+ 
+  .passive-list-item {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--cream-2);
+    font-size: 13px;
+    font-family: var(--mono);
+    font-style: italic;
+    color: var(--rust);
+    line-height: 1.5;
+  }
+  .passive-list-item:last-child { border-bottom: none; }
+ 
+  .passive-list-empty {
+    font-size: 13px;
+    color: var(--ink-3);
+    font-style: italic;
+    text-align: center;
+    padding: 20px 0;
+    font-family: var(--sans);
+  }
+ 
+  /* ── SEO content ── */
+  .explainer {
+    margin-top: 72px;
+    padding-top: 52px;
+    border-top: 2px solid var(--ink);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+ 
+  @media (max-width: 640px) { .explainer { grid-template-columns: 1fr; } }
+ 
+  .explainer h2 {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-bottom: 16px;
+    grid-column: 1 / -1;
+  }
+ 
+  .explainer p {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.85;
+    margin-bottom: 14px;
+  }
+ 
+  .explainer h3 {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+ 
+  /* FAQ */
+  .faq { margin-top: 56px; grid-column: 1 / -1; }
+ 
+  details { border-top: 1px solid var(--cream-3); }
+  details:last-child { border-bottom: 1px solid var(--cream-3); }
+ 
+  summary {
+    list-style: none;
+    padding: 18px 0;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--ink);
+  }
+  summary::after { content: '+'; font-family: var(--mono); font-size: 18px; color: var(--ink-3); transition: transform .2s; }
+  details[open] summary::after { transform: rotate(45deg); }
+ 
+  .faq-a { font-size: 14px; color: var(--ink-2); padding-bottom: 18px; line-height: 1.75; max-width: 600px; }
+ 
+  /* Tools nav bar */
+  .tools-nav {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+  .tool-pill {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 6px 14px;
+    border-radius: 3px;
+    border: 1px solid var(--cream-3);
+    background: var(--cream-2);
+    color: var(--ink-2);
+    text-decoration: none;
+    transition: all .15s;
+  }
+  .tool-pill:hover { background: var(--rust-light); border-color: var(--rust); color: var(--rust); }
+  .tool-pill.current { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+ 
+  footer {
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--cream-3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+  }
+ 
+  .footer-brand span { color: var(--rust); }
+ 
+  .ad-slot {
+    background: var(--cream-2);
+    border: 1px dashed var(--cream-3);
+    border-radius: 3px;
+    padding: 20px;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    margin-top: 28px;
+    letter-spacing: 0.06em;
+  }
+ 
+  /* ── Sticky anchor ad ── */
+  .sticky-anchor {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--cream);
+    border-top: 2px solid var(--ink);
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    z-index: 999;
+    box-shadow: 0 -4px 20px rgba(28,26,20,0.1);
+  }
+ 
+  .sticky-anchor-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    flex-shrink: 0;
+  }
+ 
+  .sticky-anchor-close {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--ink-3);
+    line-height: 1;
+    padding: 4px;
+  }
+ 
+  .sticky-anchor-close:hover { color: var(--ink); }
+  body.anchor-visible { padding-bottom: 80px; }
+ 
+  /* ── Affiliate banner ── */
+  .affiliate-banner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--gold-light);
+    border: 1px solid #e8d5a0;
+    border-radius: 4px;
+    padding: 16px 20px;
+    margin: 28px 0;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+ 
+  .affiliate-banner:hover {
+    box-shadow: 0 4px 16px rgba(28,26,20,0.1);
+    transform: translateY(-1px);
+  }
+ 
+  .affiliate-banner-icon { font-size: 26px; flex-shrink: 0; }
+  .affiliate-banner-title { font-weight: 500; font-size: 14px; color: var(--ink); margin-bottom: 2px; }
+  .affiliate-banner-sub { font-size: 12px; color: var(--ink-2); line-height: 1.5; }
+ 
+  .affiliate-banner-cta {
+    margin-left: auto;
+    background: var(--ink);
+    color: var(--cream);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    padding: 8px 16px;
+    border-radius: 3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+ 
+  .affiliate-banner:hover .affiliate-banner-cta { background: var(--rust); }
+ 
+  .affiliate-disclosure {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    margin-top: -20px;
+    margin-bottom: 24px;
+  }
+ 
+  .ad-incontent {
+    background: var(--cream-2);
+    border: 1px dashed var(--cream-3);
+    border-radius: 3px;
+    padding: 20px;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    margin: 28px 0;
+    letter-spacing: 0.06em;
+  }
+ 
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-in { animation: fadeIn 0.35s ease both; }
+</style>
 </head>
 <body>
-<p class="p1"><span class="s1"><a href="file:///Users/rebekah/Desktop/index.html">Readability Checker</a></span></p>
-<p class="p2"><span class="s1"><a href="file:///Users/rebekah/Desktop/passive-voice-detector.html">Passive Voice<span class="s2"></span></a></span></p>
-<p class="p1"><span class="s1">Word Counter</span></p>
-<h1 style="margin: 0.0px 0.0px 0.0px 0.0px; font: 33.6px 'Helvetica Neue'; color: #151410; -webkit-text-stroke: #151410"><span class="s1">Passive Voice</span></h1>
-<p class="p4"><span class="s1">Detector &amp; Highlighter</span></p>
-<p class="p5"><span class="s1">—</span></p>
-<p class="p6"><span class="s1">ACTIVE VOICE SCORE</span></p>
-<p class="p7"><span class="s1"><a href="file:///Users/rebekah/Desktop/readability-checker.html">Readability Checker<span class="s3"></span></a></span></p>
-<p class="p8"><span class="s1">Passive Voice Detector</span></p>
-<p class="p7"><span class="s1">Word Counter</span></p>
-<p class="p7"><span class="s1">Reading Time</span></p>
-<p class="p1"><span class="s1">PASTE YOUR TEXT</span></p>
-<p class="p9"><span class="s1">Edit</span></p>
-<p class="p10"><span class="s1">Analyse →</span></p>
-<p class="p9"><span class="s1">Clear</span></p>
-<p class="p11"><span class="s4">ACTIVE VOICE SCORE</span></p>
-<p class="p12"><span class="s4">—</span></p>
-<p class="p13"><span class="s4">Enter text above</span></p>
-<p class="p14"><span class="s1"></span><br></p>
-<p class="p11"><span class="s4">PASSIVE CONSTRUCTIONS</span></p>
-<p class="p12"><span class="s4">—</span></p>
-<p class="p13"><span class="s4">found in text</span></p>
-<p class="p11"><span class="s4">SENTENCES CHECKED</span></p>
-<p class="p12"><span class="s4">—</span></p>
-<p class="p13"><span class="s4">total sentences</span></p>
-<p class="p11"><span class="s4">PASSIVE PHRASES FOUND</span></p>
-<p class="p15"><span class="s4">Paste text and click Analyse</span></p>
-<p class="p16"><span class="s5">Ad unit 1 — 336×280 or responsive rectangle</span></p>
-<p class="p17"><span class="s1">Replace with: &lt;ins class="adsbygoogle"...&gt;</span></p>
-<p class="p18"><span class="s6"><a href="https://grammarly.com/">✍️<span class="s1"></span></a></span></p>
-<p class="p19"><span class="s6"><a href="https://grammarly.com/">Catch every passive voice issue automatically<span class="s7"></span></a></span></p>
-<p class="p20"><span class="s6"><a href="https://grammarly.com/">Grammarly highlights passive voice, weak word choices, and clarity issues as you type. Free to get started.<span class="s8"></span></a></span></p>
-<p class="p8"><span class="s1"><a href="https://grammarly.com/">Try free →</a></span></p>
-<p class="p21"><span class="s1">* Sponsored link. We may earn a commission at no cost to you.</span></p>
-<h2 style="margin: 0.0px 0.0px 16.0px 0.0px; font: 19.2px 'Helvetica Neue'; color: #151410; -webkit-text-stroke: #151410"><span class="s1">What is passive voice — and why does it matter?</span></h2>
-<h3 style="margin: 0.0px 0.0px 10.0px 0.0px; font: 13.2px 'Helvetica Neue'; color: #151410; -webkit-text-stroke: #151410"><span class="s1">Active vs passive voice</span></h3>
-<p class="p24"><span class="s1">In an active sentence, the subject performs the action: "The editor rejected the manuscript." In a passive sentence, the subject receives the action: "The manuscript was rejected by the editor." Both are grammatically correct — but they create very different effects.</span></p>
-<p class="p24"><span class="s1">Passive voice is not wrong. It's a deliberate tool used in scientific writing, formal reports, and contexts where the actor is unknown or unimportant. The problem is when writers use it unconsciously, which weakens prose, obscures responsibility, and increases reading difficulty.</span></p>
-<p class="p24"><span class="s1">Research consistently shows that active sentences are processed faster and remembered more easily than their passive equivalents. For most writing — journalism, marketing, fiction, business communication — fewer passives means clearer, more direct prose.</span></p>
-<h3 style="margin: 0.0px 0.0px 10.0px 0.0px; font: 13.2px 'Helvetica Neue'; color: #151410; -webkit-text-stroke: #151410"><span class="s1">Who should use this tool?</span></h3>
-<p class="p24"><span class="s1">Teachers and educators can use this tool to help students understand the difference between active and passive voice in practice — seeing their own writing highlighted is more effective than abstract grammar rules.</span></p>
-<p class="p24"><span class="s1">Academic writers can check whether they're over-relying on passive voice in papers and dissertations, where a mix of active and passive is expected but excessive passivity signals weak argumentation.</span></p>
-<p class="p24"><span class="s1">Business and marketing writers should aim for an active voice score above 80%. Corporate communications are notorious for passive constructions that dilute accountability and energy.</span></p>
-<p class="p24"><span class="s1">Fiction writers will find this tool useful for identifying passages where prose feels distant or lifeless — passive voice is often the culprit.</span></p>
-<p class="p16"><span class="s5">Ad unit 2 — In-article / native unit</span></p>
-<p class="p17"><span class="s1">Replace with: &lt;ins class="adsbygoogle" data-ad-format="fluid"...&gt;</span></p>
-<h3 style="margin: 0.0px 0.0px 10.0px 0.0px; font: 13.2px 'Helvetica Neue'; color: #151410; -webkit-text-stroke: #151410"><span class="s1">What score should I aim for?</span></h3>
-<p class="p24"><span class="s1">The right target depends entirely on your writing type. Academic scientific writing may legitimately score 60–70%. Marketing copy and journalism should aim for 85%+. Most writing benefits from an active voice score above 75%.</span></p>
-<h2 style="margin: 0.0px 0.0px 16.0px 0.0px; font: 19.2px 'Helvetica Neue'; color: #151410; -webkit-text-stroke: #151410"><span class="s1">Frequently asked questions</span></h2>
-<p class="p19"><span class="s1">Is passive voice always wrong?</span></p>
-<p class="p24"><span class="s1">No. Passive voice is appropriate when the actor is unknown ("The window was broken overnight"), when you want to emphasise the action rather than the actor ("The vaccine was developed in 2020"), or in scientific writing where impersonality is conventional. The goal is intentional use, not elimination.</span></p>
-<p class="p19"><span class="s1">How does the detector identify passive voice?</span></p>
-<p class="p24"><span class="s1">The tool scans for the classic passive construction: a form of the verb "to be" (is, are, was, were, been, being, be) followed by a past participle (typically ending in -ed, -en, -d, -t, -n). It catches the large majority of passive constructions in standard English prose.</span></p>
-<p class="p19"><span class="s1">How do I convert passive to active voice?</span></p>
-<p class="p24"><span class="s1">Identify who or what is performing the action, then restructure the sentence to make them the subject. "The report was written by Sarah" becomes "Sarah wrote the report." Sometimes the actor is missing entirely — in those cases, you'll need to decide whether to add one or restructure.</span></p>
-<p class="p19"><span class="s1">Does this work for academic writing?</span></p>
-<p class="p24"><span class="s1">Yes — though for academic writing you shouldn't aim to eliminate passive voice. The tool helps you identify where you're using it so you can make deliberate choices. Many universities and style guides recommend a mix; the key is intentionality rather than avoidance.</span></p>
-<p class="p19"><span class="s1">Is my text stored or saved?</span></p>
-<p class="p24"><span class="s1">No. All analysis happens entirely in your browser. Your text is never sent to any server, stored, or seen by anyone. You can safely paste confidential drafts, student work, or unpublished manuscripts.</span></p>
-<p class="p1"><span class="s1">Writing</span><span class="s2">Tools</span><span class="s1">.io — free tools for writers &amp; educators</span></p>
-<p class="p1"><span class="s1">About</span></p>
-<p class="p1"><span class="s1">Privacy</span></p>
-<p class="p1"><span class="s1">Contact</span></p>
-<p class="p16"><span class="s5">Ad unit 3 — Leaderboard / footer banner</span></p>
-<p class="p17"><span class="s1">Replace with: &lt;ins class="adsbygoogle" data-ad-format="auto"...&gt;</span></p>
-<p class="p25"><span class="s9">AD</span></p>
-<p class="p11"><span class="s5">Sticky anchor ad — 320×50 mobile banner</span></p>
-<p class="p26"><span class="s9">✕</span></p>
+<div class="page">
+ 
+  <header>
+    <div class="header-left">
+      <nav class="site-nav">
+        <a href="readability-checker.html">Readability Checker</a>
+        <a href="passive-voice-detector.html" class="active">Passive Voice</a>
+        <a href="#">Word Counter</a>
+      </nav>
+      <h1>
+        Passive Voice
+        <span class="rule-line">Detector &amp; Highlighter</span>
+      </h1>
+    </div>
+    <div class="header-score-preview">
+      <svg class="score-ring" viewBox="0 0 80 80">
+        <circle cx="40" cy="40" r="32" fill="none" stroke="#e8e0d0" stroke-width="6"/>
+        <circle id="ring-fill" cx="40" cy="40" r="32" fill="none" stroke="#2e6e44"
+          stroke-width="6" stroke-linecap="round"
+          stroke-dasharray="201"
+          stroke-dashoffset="201"
+          transform="rotate(-90 40 40)"/>
+        <text class="score-pct" id="ring-pct" x="40" y="41">—</text>
+      </svg>
+      <p class="score-ring-label">Active voice score</p>
+    </div>
+  </header>
+ 
+  <nav class="tools-nav" aria-label="Related tools">
+    <a href="readability-checker.html" class="tool-pill">Readability Checker</a>
+    <a href="#" class="tool-pill current">Passive Voice Detector</a>
+    <a href="#" class="tool-pill">Word Counter</a>
+    <a href="#" class="tool-pill">Reading Time</a>
+  </nav>
+ 
+  <main>
+    <div class="main-grid">
+ 
+      <div class="editor-section">
+        <div class="editor-label-row">
+          <span class="editor-label">Paste your text</span>
+          <div class="btn-row">
+            <button class="btn" id="btn-edit" onclick="showEditor()">Edit</button>
+            <button class="btn active" id="btn-analyse" onclick="runAnalysis()">Analyse →</button>
+            <button class="btn" onclick="clearAll()">Clear</button>
+          </div>
+        </div>
+ 
+        <textarea id="input-text" placeholder="Paste an essay, article, email, or any piece of writing here. The tool will highlight every passive voice construction and give you an active voice score…" oninput="liveUpdate()"></textarea>
+        <div class="output-section" id="output-section">
+          <div class="output-box" id="output-box"></div>
+        </div>
+      </div>
+ 
+      <div class="sidebar" id="sidebar">
+ 
+        <div class="stat-card fade-in">
+          <div class="stat-card-title">Active voice score</div>
+          <div class="big-num" id="active-score">—</div>
+          <div class="big-num-sub" id="active-sub">Enter text above</div>
+          <div id="verdict-band"></div>
+        </div>
+ 
+        <div class="stat-card fade-in">
+          <div class="stat-card-title">Passive constructions</div>
+          <div class="big-num" id="passive-count">—</div>
+          <div class="big-num-sub" id="passive-sub">found in text</div>
+        </div>
+ 
+        <div class="stat-card fade-in">
+          <div class="stat-card-title">Sentences checked</div>
+          <div class="big-num" id="sentence-count">—</div>
+          <div class="big-num-sub">total sentences</div>
+        </div>
+ 
+        <div class="passive-list-card fade-in" id="passive-list-card">
+          <div class="stat-card-title" style="margin-bottom:8px">Passive phrases found</div>
+          <div class="passive-list-empty" id="passive-list">Paste text and click Analyse</div>
+        </div>
+ 
+      </div>
+    </div>
+ 
+    <!-- ═══════════════════════════════════════════════════
+         AD SLOT 1 — Below tool output, highest RPM
+         Replace with your AdSense display ad unit code
+         ═══════════════════════════════════════════════════ -->
+    <div class="ad-incontent">
+      Ad unit 1 — 336×280 or responsive rectangle<br>
+      Replace with: &lt;ins class="adsbygoogle"...&gt;
+    </div>
+ 
+    <!-- ═══════════════════════════════════════════════════
+         AFFILIATE — Grammarly (primary)
+         Sign up: grammarly.com/affiliates
+         Earns: ~£15–25 free signup, £80+ premium conversion
+         Replace href with your affiliate tracking URL
+         ═══════════════════════════════════════════════════ -->
+    <a class="affiliate-banner" href="https://grammarly.com" target="_blank" rel="noopener sponsored" aria-label="Try Grammarly - sponsored">
+      <span class="affiliate-banner-icon">✍️</span>
+      <div class="affiliate-banner-text">
+        <div class="affiliate-banner-title">Catch every passive voice issue automatically</div>
+        <div class="affiliate-banner-sub">Grammarly highlights passive voice, weak word choices, and clarity issues as you type. Free to get started.</div>
+      </div>
+      <span class="affiliate-banner-cta">Try free →</span>
+    </a>
+    <p class="affiliate-disclosure">* Sponsored link. We may earn a commission at no cost to you.</p>
+ 
+    <section class="explainer">
+      <h2>What is passive voice — and why does it matter?</h2>
+ 
+      <div>
+        <h3>Active vs passive voice</h3>
+        <p>In an active sentence, the subject performs the action: <em>"The editor rejected the manuscript."</em> In a passive sentence, the subject receives the action: <em>"The manuscript was rejected by the editor."</em> Both are grammatically correct — but they create very different effects.</p>
+        <p>Passive voice is not wrong. It's a deliberate tool used in scientific writing, formal reports, and contexts where the actor is unknown or unimportant. The problem is when writers use it unconsciously, which weakens prose, obscures responsibility, and increases reading difficulty.</p>
+        <p>Research consistently shows that active sentences are processed faster and remembered more easily than their passive equivalents. For most writing — journalism, marketing, fiction, business communication — fewer passives means clearer, more direct prose.</p>
+      </div>
+ 
+      <div>
+        <h3>Who should use this tool?</h3>
+        <p><strong>Teachers and educators</strong> can use this tool to help students understand the difference between active and passive voice in practice — seeing their own writing highlighted is more effective than abstract grammar rules.</p>
+        <p><strong>Academic writers</strong> can check whether they're over-relying on passive voice in papers and dissertations, where a mix of active and passive is expected but excessive passivity signals weak argumentation.</p>
+        <p><strong>Business and marketing writers</strong> should aim for an active voice score above 80%. Corporate communications are notorious for passive constructions that dilute accountability and energy.</p>
+        <p><strong>Fiction writers</strong> will find this tool useful for identifying passages where prose feels distant or lifeless — passive voice is often the culprit.</p>
+ 
+        <!-- ═══════════════════════════════════════════════
+             AD SLOT 2 — Mid-content in-article unit
+             ═══════════════════════════════════════════════ -->
+        <div class="ad-incontent">
+          Ad unit 2 — In-article / native unit<br>
+          Replace with: &lt;ins class="adsbygoogle" data-ad-format="fluid"...&gt;
+        </div>
+ 
+        <!-- AFFILIATE — ProWritingAid (academic/professional audience)
+             Sign up: prowritingaid.com/affiliate — pays up to £40/sale
+             Uncomment when ready:
+        <a class="affiliate-banner" href="YOUR_PWA_AFFILIATE_URL" target="_blank" rel="noopener sponsored">
+          <span class="affiliate-banner-icon">📖</span>
+          <div class="affiliate-banner-text">
+            <div class="affiliate-banner-title">Deep editing for writers and academics</div>
+            <div class="affiliate-banner-sub">ProWritingAid gives 20+ in-depth writing reports including passive voice, readability, and style consistency.</div>
+          </div>
+          <span class="affiliate-banner-cta">Try free →</span>
+        </a>
+        <p class="affiliate-disclosure">* Sponsored link. We may earn a commission at no cost to you.</p>
+        -->
+ 
+        <h3>What score should I aim for?</h3>
+        <p>The right target depends entirely on your writing type. Academic scientific writing may legitimately score 60–70%. Marketing copy and journalism should aim for 85%+. Most writing benefits from an active voice score above 75%.</p>
+      </div>
+ 
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+ 
+        <details>
+          <summary>Is passive voice always wrong?</summary>
+          <p class="faq-a">No. Passive voice is appropriate when the actor is unknown ("The window was broken overnight"), when you want to emphasise the action rather than the actor ("The vaccine was developed in 2020"), or in scientific writing where impersonality is conventional. The goal is intentional use, not elimination.</p>
+        </details>
+ 
+        <details>
+          <summary>How does the detector identify passive voice?</summary>
+          <p class="faq-a">The tool scans for the classic passive construction: a form of the verb "to be" (is, are, was, were, been, being, be) followed by a past participle (typically ending in -ed, -en, -d, -t, -n). It catches the large majority of passive constructions in standard English prose.</p>
+        </details>
+ 
+        <details>
+          <summary>How do I convert passive to active voice?</summary>
+          <p class="faq-a">Identify who or what is performing the action, then restructure the sentence to make them the subject. "The report was written by Sarah" becomes "Sarah wrote the report." Sometimes the actor is missing entirely — in those cases, you'll need to decide whether to add one or restructure.</p>
+        </details>
+ 
+        <details>
+          <summary>Does this work for academic writing?</summary>
+          <p class="faq-a">Yes — though for academic writing you shouldn't aim to eliminate passive voice. The tool helps you identify where you're using it so you can make deliberate choices. Many universities and style guides recommend a mix; the key is intentionality rather than avoidance.</p>
+        </details>
+ 
+        <details>
+          <summary>Is my text stored or saved?</summary>
+          <p class="faq-a">No. All analysis happens entirely in your browser. Your text is never sent to any server, stored, or seen by anyone. You can safely paste confidential drafts, student work, or unpublished manuscripts.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+ 
+  <footer>
+    <span class="footer-brand">Writing<span>Tools</span>.io — free tools for writers &amp; educators</span>
+    <nav style="display:flex;gap:16px;">
+      <a href="#" style="color:var(--ink-3);text-decoration:none">About</a>
+      <a href="#" style="color:var(--ink-3);text-decoration:none">Privacy</a>
+      <a href="#" style="color:var(--ink-3);text-decoration:none">Contact</a>
+    </nav>
+  </footer>
+ 
+  <!-- ═══════════════════════════════════════════════
+       AD SLOT 3 — Pre-footer leaderboard
+       ═══════════════════════════════════════════════ -->
+  <div class="ad-incontent" style="margin-top:24px;">
+    Ad unit 3 — Leaderboard / footer banner<br>
+    Replace with: &lt;ins class="adsbygoogle" data-ad-format="auto"...&gt;
+  </div>
+ 
+</div>
+ 
+<!-- STICKY ANCHOR AD ═══════════════════════════════════════
+     AdSense: Ads → By ad unit → Display ads → Anchor/overlay
+     ══════════════════════════════════════════════════════ -->
+<div class="sticky-anchor" id="sticky-anchor">
+  <span class="sticky-anchor-label">Ad</span>
+  <div style="width:320px;height:50px;background:var(--cream-2);border:1px dashed var(--cream-3);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:0.06em;">
+    Sticky anchor ad — 320×50 mobile banner
+  </div>
+  <button class="sticky-anchor-close" onclick="dismissAnchor()" aria-label="Close ad">✕</button>
+</div>
+ 
+<script>
+function dismissAnchor() {
+  document.getElementById('sticky-anchor').style.display = 'none';
+  document.body.classList.remove('anchor-visible');
+}
+document.body.classList.add('anchor-visible');
+</script>
+ 
+<script>
+// ── Passive voice patterns ───────────────────────────────
+// to-be verbs
+const toBeVerbs = ['is','are','was','were','be','been','being','am'];
+// common irregular past participles
+const irregularPP = ['written','known','seen','found','made','given','taken','brought','built','bought','caught','done','drawn','driven','eaten','fallen','flown','forgotten','frozen','gotten','gone','grown','heard','held','hidden','hurt','kept','known','laid','led','left','lent','lit','lost','meant','met','paid','proved','put','quit','read','ridden','risen','run','said','sat','sent','shone','shown','shut','sung','sunk','slept','slid','spent','stood','stolen','swept','swum','swung','taught','torn','told','thought','thrown','understood','woken','worn','won','wound','woven','hit','cut','set','let','split','burst','cast','spread','thrust','upset','bit','bent','bound','bred','clung','crept','dug','dwelt','felt','fought','fled','flung','forbade','hung','knelt','leapt','learnt','lit','sped','spelt','spun','stuck','stung','strode','struck','strung','stunk','swept','swung','wept','wrung'];
+ 
+function isPassParticiple(word) {
+  const w = word.toLowerCase().replace(/[^a-z]/g,'');
+  if (w.length < 3) return false;
+  if (irregularPP.includes(w)) return true;
+  // -ed ending
+  if (w.endsWith('ed') && w.length > 4) return true;
+  // -en ending
+  if (w.endsWith('en') && w.length > 4) return true;
+  return false;
+}
+ 
+function findPassives(text) {
+  // Tokenise into words preserving position
+  const wordRegex = /\b[a-zA-Z'-]+\b/g;
+  const words = [];
+  let m;
+  while ((m = wordRegex.exec(text)) !== null) {
+    words.push({ word: m[0], index: m.index, end: m.index + m[0].length });
+  }
+ 
+  const passives = [];
+ 
+  for (let i = 0; i < words.length - 1; i++) {
+    const w = words[i].word.toLowerCase();
+    if (!toBeVerbs.includes(w)) continue;
+ 
+    // Look ahead up to 3 words for a past participle (allow adverbs between)
+    for (let j = i + 1; j < Math.min(i + 4, words.length); j++) {
+      const next = words[j].word.toLowerCase();
+      // skip common adverbs that sit between be-verb and participle
+      if (['not','also','often','never','always','usually','now','being','just','already','still','recently','been'].includes(next)) continue;
+      if (isPassParticiple(next)) {
+        passives.push({
+          start: words[i].index,
+          end: words[j].end,
+          phrase: text.slice(words[i].index, words[j].end)
+        });
+        break;
+      }
+      // if we hit a to-be verb again or a likely sentence break, stop looking
+      if (toBeVerbs.includes(next)) break;
+    }
+  }
+  return passives;
+}
+ 
+function countSentences(text) {
+  const s = text.split(/[.!?]+(?:\s|$)/).filter(s => s.trim().length > 2);
+  return Math.max(1, s.length);
+}
+ 
+// ── Render highlighted output ────────────────────────────
+function buildHighlightedHTML(text, passives) {
+  if (!passives.length) return escapeHtml(text);
+  let result = '';
+  let cursor = 0;
+  for (const p of passives) {
+    result += escapeHtml(text.slice(cursor, p.start));
+    result += `<span class="passive-highlight">${escapeHtml(p.phrase)}<span class="passive-tooltip">passive voice → consider rewriting actively</span></span>`;
+    cursor = p.end;
+  }
+  result += escapeHtml(text.slice(cursor));
+  return result;
+}
+ 
+function escapeHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+ 
+// ── Update ring ──────────────────────────────────────────
+function updateRing(pct) {
+  const circumference = 201;
+  const offset = circumference - (circumference * pct / 100);
+  const ring = document.getElementById('ring-fill');
+  ring.style.strokeDashoffset = offset;
+  ring.style.stroke = pct >= 80 ? '#2e6e44' : pct >= 60 ? '#c8901a' : '#b84a2e';
+  document.getElementById('ring-pct').textContent = pct + '%';
+}
+ 
+// ── Main analysis ────────────────────────────────────────
+function runAnalysis() {
+  const text = document.getElementById('input-text').value;
+  if (!text.trim()) return;
+ 
+  const passives = findPassives(text);
+  const sentences = countSentences(text);
+  const passiveSentences = new Set();
+ 
+  // Roughly count sentences with at least one passive
+  const sentenceList = text.split(/(?<=[.!?])\s+/);
+  let passiveSentCount = 0;
+  for (const sent of sentenceList) {
+    if (findPassives(sent).length > 0) passiveSentCount++;
+  }
+ 
+  const activeScore = sentences > 0
+    ? Math.max(0, Math.round(100 - (passiveSentCount / sentences) * 100))
+    : 100;
+ 
+  // Update ring
+  updateRing(activeScore);
+ 
+  // Score display
+  const scoreEl = document.getElementById('active-score');
+  scoreEl.textContent = activeScore + '%';
+  scoreEl.className = 'big-num ' + (activeScore >= 80 ? 'good' : activeScore >= 60 ? 'warn' : 'bad');
+ 
+  document.getElementById('active-sub').textContent = 'active voice';
+ 
+  const bands = [
+    { min: 85, label: 'Excellent', cls: 'vb-green' },
+    { min: 70, label: 'Good', cls: 'vb-green' },
+    { min: 55, label: 'Moderate', cls: 'vb-gold' },
+    { min: 0,  label: 'Heavy passive use', cls: 'vb-rust' }
+  ];
+  const band = bands.find(b => activeScore >= b.min);
+  document.getElementById('verdict-band').innerHTML =
+    `<span class="verdict-band ${band.cls}">${band.label}</span>`;
+ 
+  document.getElementById('passive-count').textContent = passives.length;
+  document.getElementById('passive-count').className = 'big-num ' + (passives.length === 0 ? 'good' : passives.length < 5 ? 'warn' : 'bad');
+  document.getElementById('sentence-count').textContent = sentences;
+ 
+  // Passive list
+  const listEl = document.getElementById('passive-list');
+  if (passives.length === 0) {
+    listEl.innerHTML = '<div class="passive-list-empty">No passive constructions found — excellent!</div>';
+  } else {
+    listEl.innerHTML = passives.slice(0, 20).map(p =>
+      `<div class="passive-list-item">"…${p.phrase}…"</div>`
+    ).join('') + (passives.length > 20 ? `<div class="passive-list-item">+ ${passives.length - 20} more</div>` : '');
+  }
+ 
+  // Show highlighted output
+  document.getElementById('input-text').style.display = 'none';
+  const outputSection = document.getElementById('output-section');
+  outputSection.classList.add('visible');
+  document.getElementById('output-box').innerHTML = buildHighlightedHTML(text, passives);
+ 
+  document.getElementById('btn-edit').classList.add('active');
+  document.getElementById('btn-analyse').classList.remove('active');
+}
+ 
+function showEditor() {
+  document.getElementById('input-text').style.display = 'block';
+  document.getElementById('output-section').classList.remove('visible');
+  document.getElementById('btn-edit').classList.remove('active');
+  document.getElementById('btn-analyse').classList.add('active');
+}
+ 
+function liveUpdate() {
+  const text = document.getElementById('input-text').value;
+  const words = (text.match(/\b[a-zA-Z'-]+\b/g) || []).length;
+  // just keep ring current
+}
+ 
+function clearAll() {
+  document.getElementById('input-text').value = '';
+  document.getElementById('input-text').style.display = 'block';
+  document.getElementById('output-section').classList.remove('visible');
+  document.getElementById('active-score').textContent = '—';
+  document.getElementById('active-score').className = 'big-num';
+  document.getElementById('active-sub').textContent = 'Enter text above';
+  document.getElementById('passive-count').textContent = '—';
+  document.getElementById('sentence-count').textContent = '—';
+  document.getElementById('verdict-band').innerHTML = '';
+  document.getElementById('passive-list').innerHTML = '<div class="passive-list-empty">Paste text and click Analyse</div>';
+  document.getElementById('ring-pct').textContent = '—';
+  document.getElementById('ring-fill').style.strokeDashoffset = 201;
+}
+ 
+// Seed with a sample
+document.getElementById('input-text').value = `The report was written by the committee and was submitted last Friday. It has been noted that several errors were made during the review process. The findings were presented to the board, and a decision was reached by management.
+ 
+Active voice is preferred by most writing guides. When sentences are constructed using passive voice, the reader is often left wondering who actually performed the action.`;
+</script>
 </body>
 </html>
